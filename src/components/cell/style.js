@@ -3,7 +3,9 @@ import {StyleSheet} from "react-native";
 const style = StyleSheet.create({
     default: {
         alignItems: 'center',
-        backgroundColor: 'red'
+        justifyContent: 'center',
+        backgroundColor: 'red',
+        height: 30,
     },
 });
 

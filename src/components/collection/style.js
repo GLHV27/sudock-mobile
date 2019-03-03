@@ -8,9 +8,10 @@ const style = StyleSheet.create({
     },
     item: {
         width: '33.3333%',
-        borderColor: '#000000',
-        borderRightWidth: 1,
-        borderBottomWidth: 1,
+        color: '#000000',
+        borderWidth: 1,
+        borderRightColor: '#000000',
+        borderBottomColor: '#000000',
     },
 });
 

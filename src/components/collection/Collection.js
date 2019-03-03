@@ -8,11 +8,11 @@ export default class Collection extends React.Component {
         let style = {};
 
         // if (j < 3) {
-        //     style.borderTopWidth = 0;
+        //     style.borderTopColor = 'transparent';
         // }
         //
         // if (j % 3 === 0) {
-        //     style.borderLeftWidth = 0;
+        //     style.borderLeftColor = 'transparent';
         // }
 
         return style;

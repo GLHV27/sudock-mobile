@@ -1,25 +1,18 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {inject, observer} from 'mobx-react';
+import { View } from 'react-native';
 import style from './style';
 import Collection from "../collection/Collection";
 
-const number = [
-    [1,2,3,4,5,6,7,8,9],
-    [1,2,3,4,5,6,7,8,9],
-    [1,2,3,4,5,6,7,8,9],
-    [1,2,3,4,5,6,7,8,9],
-    [1,2,3,4,5,6,7,8,9],
-    [1,2,3,4,5,6,7,8,9],
-    [1,2,3,4,5,6,7,8,9],
-    [1,2,3,4,5,6,7,8,9],
-    [1,2,3,4,5,6,7,8,9],
-];
-
+@inject('game')
+@observer
 export default class Canvas extends React.Component {
     render() {
+        const { canvas } = this.props.game;
+
         return (
             <View style={style.container}>
-                {number.map((collection, i) => (
+                {canvas.map((collection, i) => (
                     <View
                         key={`collection-${i}`}
                         style={style.item}
