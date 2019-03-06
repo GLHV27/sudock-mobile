@@ -3,62 +3,64 @@ import random from "lodash/random";
 const NUMBER = 9;
 const LENGTH_IN_ROW = 3;
 
-function _getList() {
-    return new Array(NUMBER).fill('').map(() => []);
-}
+class Canvas {
+    _getMatrix() {
+        this.canvas = new Array(this.number).fill('').map(() => []);
 
-function _getRandomNumber() {
-    return random(1, NUMBER);
-}
+        this.canvas.forEach((collection, i) => {
+            this._fillCollection(collection, i);
+        });
 
-function _getNumber(collectionIndex, cellIndex, canvas) {
-    let number;
+        return this.canvas;
+    }
 
-    do {
-        number = _getRandomNumber();
-    } while (_checkOnRepeat(number, collectionIndex, cellIndex, canvas));
+    _getNumber(collectionIndex, cellIndex) {
+        let number;
 
-    return number;
-}
+        // do {
+        //     number = random(1, this.number);
+        // } while (this._checkOnRepeat(number, collectionIndex, cellIndex));
+        // console.log(number, collectionIndex, cellIndex);
+        // return number;
 
-function _checkOnRepeat(number, collectionIndex, cellIndex, canvas = []) {
-    debugger;
+        return 0;
+    }
 
-    const maxLength = Math.max(canvas[collectionIndex].length, collectionIndex, cellIndex);
-    const lineIndexByCollection = Math.floor(collectionIndex / LENGTH_IN_ROW);
-    const columnIndexByCollection = collectionIndex % LENGTH_IN_ROW;
+    _checkOnRepeat(number, collectionIndex, cellIndex) {
+        const lengthInLine = (collectionIndex % LENGTH_IN_ROW) * LENGTH_IN_ROW + (cellIndex % LENGTH_IN_ROW);
+        const lengthInColumn =  Math.floor(collectionIndex / LENGTH_IN_ROW) + Math.ceil(cellIndex / LENGTH_IN_ROW);
+        const maxLength = Math.max(this.canvas[collectionIndex].length, lengthInLine, lengthInColumn);
+        const lineIndexByCollection = Math.floor(collectionIndex / LENGTH_IN_ROW);
+        const columnIndexByCollection = collectionIndex % LENGTH_IN_ROW;
 
-    for (let i = 0; i < maxLength; i++) {
-        const lineCollectionIndex = Math.floor(i / LENGTH_IN_ROW) + lineIndexByCollection;
-        const columnCollectionIndex = i % LENGTH_IN_ROW + columnIndexByCollection;
-        const lineIndex = i % LENGTH_IN_ROW;
-        const columnIndex = i % LENGTH_IN_ROW * LENGTH_IN_ROW;
+        for (let i = 0; i < maxLength; i++) {
+            const lineCollectionIndex = Math.floor(i / LENGTH_IN_ROW) + lineIndexByCollection;
+            const columnCollectionIndex = i % LENGTH_IN_ROW + columnIndexByCollection;
+            const lineIndex = i % LENGTH_IN_ROW;
+            const columnIndex = i % LENGTH_IN_ROW * LENGTH_IN_ROW;
 
+            if (
+                this.canvas[collectionIndex][i] === number ||
+                this.canvas[lineCollectionIndex][lineIndex] === number ||
+                this.canvas[columnCollectionIndex][columnIndex] === number
+            ) {
+                return true;
+            }
+        }
 
-        if (
-            canvas[collectionIndex][i] === number
-        ) {
-            return true;
+        return false;
+    }
+
+    _fillCollection(collection, collectionIndex) {
+        for (let i = 0; i < this.number; i++) {
+            collection.push(this._getNumber(collectionIndex, i));
         }
     }
 
-    return false;
-}
-
-function _createCollection(collectionIndex, canvas) {
-    const list = [];
-
-    for (let j = 0; j < NUMBER; j++) {
-        let number = _getNumber(collectionIndex, j, canvas);
-
-        list.push(number);
+    create(number = NUMBER) {
+        this.number = number;
+        return this._getMatrix();
     }
-
-    return list;
 }
 
-export function createCanvas() {
-    return _getList().map((collection, i, canvas) => {
-        return _createCollection(i, canvas);
-    });
-}
+export default new Canvas();

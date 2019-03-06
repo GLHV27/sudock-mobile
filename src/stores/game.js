@@ -1,14 +1,13 @@
 import {observable, computed, action} from 'mobx';
 import BasicStore from './basic-store';
-import { createCanvas } from './canvas';
+import canvas from './canvas';
 
 class GameStore extends BasicStore {
     constructor(...args) {
         super(...args);
-
     }
 
-    @observable canvas = createCanvas();
+    @observable canvas = canvas.create();
 }
 
 export default GameStore;
