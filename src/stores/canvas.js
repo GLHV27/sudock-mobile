@@ -1,65 +1,93 @@
 import random from "lodash/random";
 
-const NUMBER = 9;
-const LENGTH_IN_ROW = 3;
+const NUMBER = 3;
 
 class Canvas {
-    _getMatrix() {
-        this.canvas = new Array(this.number).fill('').map(() => []);
+	constructor() {
+		this.numbers = [];
+	}
 
-        this.canvas.forEach((collection, i) => {
-            this._fillCollection(collection, i);
-        });
+	_getList() {
+		return new Array(this.number * this.number).fill('').map(() => []);
+	}
+
+    _createMatrix() {
+        this.canvas = this._getList();
+		this.numbers = this._getNumbers();
+
+		for (let i = 0; i < this.numbers.length; i++) {
+			this._fillLine(this.canvas[i], i);
+		}
+
+		this._randomMatrix();
 
         return this.canvas;
     }
 
-    _getNumber(collectionIndex, cellIndex) {
-        let number;
+	_getNumbers() {
+		let numbers = new Array(this.number * this.number).fill('').map((item, i) => (i + 1));
+		this._randomList(numbers);
+		return numbers;
+	}
 
-        // do {
-        //     number = random(1, this.number);
-        // } while (this._checkOnRepeat(number, collectionIndex, cellIndex));
-        // console.log(number, collectionIndex, cellIndex);
-        // return number;
+	_randomList(list) {
+		for (let i = 0; i < list.length - 1; i++) {
+			const index = random(i + 1, list.length - 1);
+			const number = list[i];
+			list[i] = list[index];
+			list[index] = number;
+		}
+	}
 
-        return 0;
+	_randomMatrix() {
+		for (let i = 0; i < this.numbers.length - 1; i++) {
+			const areaIndex = Math.floor(i / this.number);
+			const index = random(0, this.number - 1);
+			// lines
+			const line = this.canvas[areaIndex * this.number + areaIndex];
+			this.canvas[areaIndex * this.number + areaIndex] = this.canvas[areaIndex * this.number + index];
+			this.canvas[areaIndex * this.number + index] = line;
+			// columns
+			const column = this.canvas.map(line => line[areaIndex * this.number + areaIndex]);
+			this.canvas.forEach((line, i) => line[areaIndex * this.number + areaIndex] = this.canvas[i][areaIndex * this.number + index]);
+			this.canvas.forEach((line, i) => line[areaIndex * this.number + index] = column[i]);
+		}
+	}
+
+    _getNumber(lineIndex, cellIndex) {
+		const numberIndex = (lineIndex * this.number + lineIndex / this.number + cellIndex) % (this.number * this.number);
+
+		return this.numbers[Math.floor(numberIndex)];
     }
 
-    _checkOnRepeat(number, collectionIndex, cellIndex) {
-        const lengthInLine = (collectionIndex % LENGTH_IN_ROW) * LENGTH_IN_ROW + (cellIndex % LENGTH_IN_ROW);
-        const lengthInColumn =  Math.floor(collectionIndex / LENGTH_IN_ROW) + Math.ceil(cellIndex / LENGTH_IN_ROW);
-        const maxLength = Math.max(this.canvas[collectionIndex].length, lengthInLine, lengthInColumn);
-        const lineIndexByCollection = Math.floor(collectionIndex / LENGTH_IN_ROW);
-        const columnIndexByCollection = collectionIndex % LENGTH_IN_ROW;
-
-        for (let i = 0; i < maxLength; i++) {
-            const lineCollectionIndex = Math.floor(i / LENGTH_IN_ROW) + lineIndexByCollection;
-            const columnCollectionIndex = i % LENGTH_IN_ROW + columnIndexByCollection;
-            const lineIndex = i % LENGTH_IN_ROW;
-            const columnIndex = i % LENGTH_IN_ROW * LENGTH_IN_ROW;
-
-            if (
-                this.canvas[collectionIndex][i] === number ||
-                this.canvas[lineCollectionIndex][lineIndex] === number ||
-                this.canvas[columnCollectionIndex][columnIndex] === number
-            ) {
-                return true;
-            }
+    _fillLine(line, lineIndex) {
+        for (let i = 0; i < this.numbers.length; i++) {
+			line.push(this._getNumber(lineIndex, i));
         }
-
-        return false;
     }
 
-    _fillCollection(collection, collectionIndex) {
-        for (let i = 0; i < this.number; i++) {
-            collection.push(this._getNumber(collectionIndex, i));
-        }
-    }
+	_fillCollection(collection, collectionIndex) {
+		for (let i = 0; i < this.numbers.length; i++) {
+			const lineIndex = Math.floor(collectionIndex / this.number) * this.number + Math.floor(i / this.number);
+			const columnIndex = collectionIndex % this.number * this.number + i % this.number;
+			collection.push(this.canvas[lineIndex][columnIndex]);
+		}
+	}
+
+	_convertToCollections() {
+		const collections = this._getList();
+
+		collections.forEach((collection, i) => {
+			this._fillCollection(collection, i);
+		});
+
+		return collections;
+	}
 
     create(number = NUMBER) {
         this.number = number;
-        return this._getMatrix();
+		this._createMatrix();
+        return this._convertToCollections();
     }
 }
 
