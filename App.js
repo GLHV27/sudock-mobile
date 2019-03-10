@@ -5,6 +5,7 @@ import stores from './src/stores';
 import Layout from './src/components/layout/Layout';
 import Canvas from './src/components/canvas/Canvas';
 import TopBar from './src/components/top-bar/TopBar';
+import Numbers from './src/components/numbers/numbers';
 
 configure({
     enforceActions: 'always'
@@ -17,6 +18,7 @@ export default class App extends React.Component {
                 <Layout>
                     <TopBar />
                     <Canvas />
+                    <Numbers />
                 </Layout>
             </Provider>
         );

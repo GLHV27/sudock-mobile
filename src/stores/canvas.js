@@ -1,6 +1,24 @@
 import random from "lodash/random";
 
 const NUMBER = 3;
+const levelsParams = {
+    easy: {
+    	count: 38,
+		countVisibleInCollection: 5
+    },
+    normal: {
+        count: 30,
+        countVisibleInCollection: 4
+    },
+	complex: {
+        count: 25,
+        countVisibleInCollection: 3
+    },
+	expert: {
+        count: 20,
+        countVisibleInCollection: 3
+    }
+};
 
 class Canvas {
 	constructor() {
@@ -12,23 +30,19 @@ class Canvas {
 	}
 
     _createMatrix() {
-        this.canvas = this._getList();
-		this.numbers = this._getNumbers();
+        this.matrix = this._getList();
+		this.numbers = this.getNumbers();
+
+        this._randomList(this.numbers);
 
 		for (let i = 0; i < this.numbers.length; i++) {
-			this._fillLine(this.canvas[i], i);
+			this._fillLine(this.matrix[i], i);
 		}
 
 		this._randomMatrix();
 
-        return this.canvas;
+        return this.matrix;
     }
-
-	_getNumbers() {
-		let numbers = new Array(this.number * this.number).fill('').map((item, i) => (i + 1));
-		this._randomList(numbers);
-		return numbers;
-	}
 
 	_randomList(list) {
 		for (let i = 0; i < list.length - 1; i++) {
@@ -44,13 +58,13 @@ class Canvas {
 			const areaIndex = Math.floor(i / this.number);
 			const index = random(0, this.number - 1);
 			// lines
-			const line = this.canvas[areaIndex * this.number + areaIndex];
-			this.canvas[areaIndex * this.number + areaIndex] = this.canvas[areaIndex * this.number + index];
-			this.canvas[areaIndex * this.number + index] = line;
+			const line = this.matrix[areaIndex * this.number + areaIndex];
+			this.matrix[areaIndex * this.number + areaIndex] = this.matrix[areaIndex * this.number + index];
+			this.matrix[areaIndex * this.number + index] = line;
 			// columns
-			const column = this.canvas.map(line => line[areaIndex * this.number + areaIndex]);
-			this.canvas.forEach((line, i) => line[areaIndex * this.number + areaIndex] = this.canvas[i][areaIndex * this.number + index]);
-			this.canvas.forEach((line, i) => line[areaIndex * this.number + index] = column[i]);
+			const column = this.matrix.map(line => line[areaIndex * this.number + areaIndex]);
+			this.matrix.forEach((line, i) => line[areaIndex * this.number + areaIndex] = this.matrix[i][areaIndex * this.number + index]);
+			this.matrix.forEach((line, i) => line[areaIndex * this.number + index] = column[i]);
 		}
 	}
 
@@ -70,25 +84,55 @@ class Canvas {
 		for (let i = 0; i < this.numbers.length; i++) {
 			const lineIndex = Math.floor(collectionIndex / this.number) * this.number + Math.floor(i / this.number);
 			const columnIndex = collectionIndex % this.number * this.number + i % this.number;
-			collection.push(this.canvas[lineIndex][columnIndex]);
+			collection.push({
+				visible: false,
+				value: this.matrix[lineIndex][columnIndex]
+			});
 		}
 	}
 
 	_convertToCollections() {
-		const collections = this._getList();
+		this.canvas = this._getList();
 
-		collections.forEach((collection, i) => {
+        this.canvas.forEach((collection, i) => {
 			this._fillCollection(collection, i);
 		});
-
-		return collections;
 	}
 
-    create(number = NUMBER) {
+	_showForLevel() {
+		const levelParams = levelsParams[this.level];
+		const visibleNumbers = this._getList();
+		let i = 0;
+
+		while (i < levelParams.count) {
+            const collectionIndex = random(0, this.numbers.length - 1);
+            const cellIndex = random(0, this.numbers.length - 1);
+
+            if (
+				visibleNumbers[collectionIndex].length < levelParams.countVisibleInCollection &&
+				visibleNumbers[collectionIndex].indexOf(cellIndex) === -1
+			) {
+                this.canvas[collectionIndex][cellIndex].visible = true;
+                visibleNumbers[collectionIndex].push(cellIndex);
+                i += 1;
+			}
+		}
+	}
+
+    getNumbers() {
+        return new Array(this.number * this.number).fill('').map((item, i) => (i + 1));
+    }
+
+    create(level = 'normal', number = NUMBER) {
         this.number = number;
+        this.level = level;
+
 		this._createMatrix();
-        return this._convertToCollections();
+        this._convertToCollections();
+        this._showForLevel();
+
+        return this.canvas;
     }
 }
 
-export default new Canvas();
+export default Canvas;

@@ -29,7 +29,7 @@ export default class Collection extends React.Component {
                         style={[style.item, this._getItemStyle(j)]}
                     >
                         <Cell
-                            number={item}
+                            {...item}
                         />
                     </View>
                 ))}
