@@ -14,13 +14,13 @@ export default class Canvas extends React.Component {
 
         return (
             <View style={style.container}>
-                {canvas.map((collection, i) => (
+                {canvas.map((collection, collectionIndex) => (
                     <View
-                        key={`collection-${i}`}
+                        key={`collection-${collectionIndex}`}
                         style={style.item}
                     >
                         <Collection
-                            i={i}
+                            collectionIndex={collectionIndex}
                             list={collection}
                         />
                     </View>

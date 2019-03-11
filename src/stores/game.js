@@ -11,6 +11,14 @@ class GameStore extends BasicStore {
 
     @observable canvas = canvas.create();
     @observable numbers = canvas.getNumbers();
+    @observable selected = { collectionIndex: null, cellIndex: null };
+
+    @action select = (collectionIndex, cellIndex) => {
+        this.selected = {
+            collectionIndex,
+            cellIndex
+        };
+    }
 }
 
 export default GameStore;

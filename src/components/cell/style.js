@@ -1,12 +1,18 @@
 import {StyleSheet} from "react-native";
 
-const style = StyleSheet.create({
+export default StyleSheet.create({
     default: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'red',
-        height: 30,
+        paddingBottom: '100%',
+        position: 'relative',
     },
+    text: {
+        position: 'absolute',
+        fontSize: 25,
+        color: '#000000',
+    },
+    invisible: {
+        opacity: 0
+    }
 });
-
-export default style;

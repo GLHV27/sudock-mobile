@@ -1,19 +1,37 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { inject, observer } from 'mobx-react';
+import { Text, TouchableOpacity } from 'react-native';
 import style from './style';
 
+@inject(({ game }) => ({
+    game,
+}))
+@observer
 export default class Cell extends React.Component {
+    _onSelect = () => {
+        const { collectionIndex, cellIndex, game } = this.props;
+        game.select(collectionIndex, cellIndex);
+    }
+
     render() {
         const { visible } = this.props;
-        const opacity = visible ? 1 : 0;
+        const invisible = visible ? null : style.invisible;
 
         return (
-            <View
+            <TouchableOpacity
                 style={[style.default]}
-                opacity={opacity}
+                activeOpacity={1}
+                onPress={this._onSelect}
             >
-                <Text>{this.props.value}</Text>
-            </View>
+                <Text
+                    style={[
+                        style.text,
+                        invisible
+                    ]}
+                >
+                    {this.props.value}
+                </Text>
+            </TouchableOpacity>
         );
     }
 }

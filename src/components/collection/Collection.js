@@ -1,35 +1,55 @@
 import React from 'react';
 import { View } from 'react-native';
+import { inject, observer } from 'mobx-react';
 import style from './style';
 import Cell from '../cell/Cell';
+import { NUMBER } from '../config';
 
+@inject(({ game }) => ({
+    selected: game.selected,
+}))
+@observer
 export default class Collection extends React.Component {
-    _getItemStyle(j) {
+    _getItemStyle(cellIndex) {
         let style = {};
 
-        // if (j < 3) {
-        //     style.borderTopColor = 'transparent';
-        // }
-        //
-        // if (j % 3 === 0) {
-        //     style.borderLeftColor = 'transparent';
-        // }
+        if (Math.floor(cellIndex / NUMBER) !== 0) {
+            style.borderTopWidth = 1;
+        }
+
+        if (cellIndex % NUMBER !== 0) {
+            style.borderLeftWidth = 1;
+        }
 
         return style;
     }
 
+    _getSelectedStyle(cellIndex) {
+        const { collectionIndex, selected } = this.props;
+        return selected.collectionIndex === collectionIndex &&
+            selected.cellIndex === cellIndex
+                ? style.selected
+                : null
+    }
+
     render() {
-        const { list, i } = this.props;
+        const { list, collectionIndex } = this.props;
 
         return (
             <View style={style.container}>
-                {list.map((item, j) => (
+                {list.map((item, cellIndex) => (
                     <View
-                        key={`cell-${i}-${j}`}
-                        style={[style.item, this._getItemStyle(j)]}
+                        key={`cell-${collectionIndex}-${cellIndex}`}
+                        style={[
+                            style.item,
+                            this._getItemStyle(cellIndex),
+                            this._getSelectedStyle(cellIndex)
+                        ]}
                     >
                         <Cell
                             {...item}
+                            cellIndex={cellIndex}
+                            collectionIndex={collectionIndex}
                         />
                     </View>
                 ))}

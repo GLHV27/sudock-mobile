@@ -4,13 +4,16 @@ const style = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        alignContent: 'space-around',
+        justifyContent: 'space-around',
+        width: '100%',
+        paddingTop: 20,
     },
     item: {
+
     },
     text: {
         fontSize: 40,
-        color: '#000000'
+        color: '#007efe'
     }
 });
 

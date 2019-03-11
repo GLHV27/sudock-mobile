@@ -1,18 +1,19 @@
 import {StyleSheet} from "react-native";
+import { style } from "../config";
 
-const style = StyleSheet.create({
+export default StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
+        borderWidth: 1,
+        borderColor: '#000000',
     },
     item: {
         width: '33.3333%',
-        color: '#000000',
-        borderWidth: 1,
-        borderRightColor: '#000000',
-        borderBottomColor: '#000000',
+        borderColor: '#000000',
+    },
+    selected: {
+        backgroundColor: '#bee1ff'
     },
 });
-
-export default style;
