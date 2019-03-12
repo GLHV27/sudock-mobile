@@ -32,6 +32,14 @@ export default class Collection extends React.Component {
                 : null
     }
 
+    _getHighlightStyle(cell) {
+        return cell.highlight ? style.highlight : null;
+    }
+
+    _getHighlightByNumberStyle(cell) {
+        return cell.isHighlightByNumber ? style.highlightByNumber : null;
+    }
+
     render() {
         const { list, collectionIndex } = this.props;
 
@@ -43,7 +51,9 @@ export default class Collection extends React.Component {
                         style={[
                             style.item,
                             this._getItemStyle(cellIndex),
-                            this._getSelectedStyle(cellIndex)
+                            this._getHighlightStyle(item),
+                            this._getHighlightByNumberStyle(item),
+                            this._getSelectedStyle(cellIndex),
                         ]}
                     >
                         <Cell

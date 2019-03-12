@@ -13,7 +13,7 @@ const style = StyleSheet.create({
     },
     text: {
         fontSize: 40,
-        color: '#007efe'
+        color: '#2e65f3'
     }
 });
 

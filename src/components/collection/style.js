@@ -16,4 +16,10 @@ export default StyleSheet.create({
     selected: {
         backgroundColor: '#bee1ff'
     },
+    highlight: {
+        backgroundColor: '#ececec'
+    },
+    highlightByNumber: {
+        backgroundColor: '#dadada'
+    }
 });

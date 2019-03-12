@@ -10,12 +10,14 @@ import style from './style';
 export default class Cell extends React.Component {
     _onSelect = () => {
         const { collectionIndex, cellIndex, game } = this.props;
-        game.select(collectionIndex, cellIndex);
+        game.onSelect(collectionIndex, cellIndex);
     }
 
     render() {
-        const { visible } = this.props;
-        const invisible = visible ? null : style.invisible;
+        const { visible, number, value, isError, isGuessed } = this.props;
+        const errorStyle = isError ? style.error : null;
+        const visibleStyle = (visible || isError) ? style.visible : null;
+        const guessedStyle = isGuessed ? style.guessed : null;
 
         return (
             <TouchableOpacity
@@ -26,10 +28,12 @@ export default class Cell extends React.Component {
                 <Text
                     style={[
                         style.text,
-                        invisible
+                        visibleStyle,
+                        errorStyle,
+                        guessedStyle
                     ]}
                 >
-                    {this.props.value}
+                    {number || value}
                 </Text>
             </TouchableOpacity>
         );

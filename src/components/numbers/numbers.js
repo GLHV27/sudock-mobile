@@ -5,11 +5,12 @@ import style from './style';
 
 @inject(({ game }) => ({
     numbers: game.numbers,
+    onWrite: game.onWrite
 }))
 @observer
 export default class Numbers extends React.Component {
     _onWriteNumber = (index) => {
-
+        this.props.onWrite(index + 1);
     }
 
     render() {
@@ -21,8 +22,8 @@ export default class Numbers extends React.Component {
                     <TouchableOpacity
                         key={`number-${i}`}
                         style={style.item}
-                        index={i}
-                        onPress={this._onWriteNumber}
+                        data-index={i}
+                        onPress={this._onWriteNumber.bind(this, i)}
                     >
                         <Text
                             style={style.text}

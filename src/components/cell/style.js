@@ -11,8 +11,15 @@ export default StyleSheet.create({
         position: 'absolute',
         fontSize: 25,
         color: '#000000',
+        opacity: 0,
     },
-    invisible: {
-        opacity: 0
+    visible: {
+        opacity: 1
+    },
+    error: {
+        color: '#ff3030',
+    },
+    guessed: {
+        color: '#2e65f3',
     }
 });

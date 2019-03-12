@@ -82,10 +82,15 @@ class Canvas {
 
 	_fillCollection(collection, collectionIndex) {
 		for (let i = 0; i < this.numbers.length; i++) {
-			const lineIndex = Math.floor(collectionIndex / this.number) * this.number + Math.floor(i / this.number);
-			const columnIndex = collectionIndex % this.number * this.number + i % this.number;
+			const lineIndex = this.getLineIndex(collectionIndex, i);
+			const columnIndex = this.getColumnIndex(collectionIndex, i);
 			collection.push({
 				visible: false,
+				isError: false,
+				isGuessed: false,
+                highlight: false,
+                isHighlightByNumber: false,
+				number: null,
 				value: this.matrix[lineIndex][columnIndex]
 			});
 		}
@@ -122,6 +127,14 @@ class Canvas {
     getNumbers() {
         return new Array(this.number * this.number).fill('').map((item, i) => (i + 1));
     }
+
+    getLineIndex(collectionIndex, cellIndex) {
+		return Math.floor(collectionIndex / this.number) * this.number + Math.floor(cellIndex / this.number);
+	}
+
+    getColumnIndex(collectionIndex, cellIndex) {
+		return collectionIndex % this.number * this.number + cellIndex % this.number;
+	}
 
     create(level = 'normal', number = NUMBER) {
         this.number = number;
