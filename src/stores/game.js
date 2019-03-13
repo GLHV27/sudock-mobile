@@ -9,9 +9,14 @@ class GameStore extends BasicStore {
         super(...args);
     }
 
-    @observable canvas = canvas.create();
+    @observable canvas = [];
     @observable numbers = canvas.getNumbers();
     @observable selected = { collectionIndex: null, cellIndex: null };
+
+    @action onCreate = (level) => {
+        this.canvas = canvas.create(level);
+        this.selected = { collectionIndex: null, cellIndex: null };
+    }
 
     @action onSelect = (collectionIndex, cellIndex) => {
         this.selected = {
