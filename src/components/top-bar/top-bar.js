@@ -1,6 +1,7 @@
 import React from 'react';
 import {inject, observer} from 'mobx-react';
 import {View, Text, StyleSheet} from 'react-native';
+import Timer from 'components/timer/timer';
 import localization from 'localization/index';
 
 @inject(({ game }) => ({
@@ -17,11 +18,11 @@ export default class TopBar extends React.Component {
                 <View style={style.item}>
                     <Text>{localization.levels[level]}</Text>
                 </View>
-                <View style={style.item}>
+                <View style={[style.item, {textAlign: 'center'}]}>
                     <Text>{`${errors.count}/${errors.total}`}</Text>
                 </View>
-                <View style={style.item}>
-                    <Text>2</Text>
+                <View style={[style.item, {textAlign: 'right'}]}>
+                    <Timer />
                 </View>
             </View>
         );

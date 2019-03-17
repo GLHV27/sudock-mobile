@@ -16,6 +16,9 @@ class GameStore extends BasicStore {
     @observable errors = {};
 
     @action onCreate = (level) => {
+        const timer = this.getStore('timer');
+
+        timer.reset();
         this.level = level;
         this.canvas = canvas.create(level);
         this.selected = { collectionIndex: null, cellIndex: null };

@@ -27,4 +27,6 @@ let strings = ({
 // });
 })['ru'];
 
+export const getLocale = () => 'ru';
+
 export default strings;
