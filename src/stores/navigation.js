@@ -1,6 +1,5 @@
-import {NavigationActions, StackActions} from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation';
 import BasicStore from './basic-store';
-import {autorun} from 'mobx';
 
 class NavigationStore extends BasicStore {
     ref = null;

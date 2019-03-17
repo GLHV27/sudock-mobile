@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import {inject, observer} from 'mobx-react';
 import { StyleSheet, Button, ActionSheetIOS } from 'react-native';
-import Layout from '../layout/Layout';
-
-const keyLevels = {
-    1: 'easy',
-    2: 'normal',
-    3: 'complex',
-    4: 'expert'
-};
+import localization from 'localization';
+import { levelKeys } from 'components/config';
+import Layout from 'components/layout/Layout';
 
 const actionSheetOptions = {
-    options: ['Отмена', 'Легка', 'Средняя', 'Сложная', 'Экспертная'],
+    options: [
+        localization.actions.cancel,
+        localization.levels.easy,
+        localization.levels.average,
+        localization.levels.complex,
+        localization.levels.expert,
+    ],
     cancelButtonIndex: 0,
 };
 
@@ -34,7 +35,7 @@ class MainScreen extends Component {
 
     _onActionSheet = (index) => {
         if (index) {
-            this.props.onCreateGame(keyLevels[index]);
+            this.props.onCreateGame(levelKeys[index]);
             this.props.nav.goTo('game');
         }
     }

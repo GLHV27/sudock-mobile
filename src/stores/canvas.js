@@ -6,7 +6,7 @@ const levelsParams = {
     	count: 38,
 		countVisibleInCollection: 5
     },
-    normal: {
+    average: {
         count: 30,
         countVisibleInCollection: 4
     },
@@ -22,6 +22,7 @@ const levelsParams = {
 
 class Canvas {
 	constructor() {
+        this.number = NUMBER;
 		this.numbers = [];
 	}
 
@@ -124,8 +125,8 @@ class Canvas {
 		}
 	}
 
-    getNumbers() {
-        return new Array(this.number * this.number).fill('').map((item, i) => (i + 1));
+    getNumbers(number = this.number) {
+        return new Array(number * number).fill('').map((item, i) => (i + 1));
     }
 
     getLineIndex(collectionIndex, cellIndex) {
@@ -136,7 +137,36 @@ class Canvas {
 		return collectionIndex % this.number * this.number + cellIndex % this.number;
 	}
 
-    create(level = 'normal', number = NUMBER) {
+    highlight(canvas, collectionIndex, cellIndex) {
+        const selectedCell = canvas[collectionIndex][cellIndex];
+        const lineIndexSelectedCell = this.getLineIndex(collectionIndex, cellIndex);
+        const columnIndexSelectedCell = this.getColumnIndex(collectionIndex, cellIndex);
+
+        canvas.forEach((collection, i) => {
+            collection.forEach((cell, j) => {
+                const isIdentical = selectedCell.visible && cell.visible && cell.value === selectedCell.value;
+                const lineIndex= this.getLineIndex(i, j);
+                const columnIndex = this.getColumnIndex(i, j);
+
+                cell.highlight = false;
+                cell.isHighlightByNumber = false;
+
+                if (isIdentical) {
+                    cell.isHighlightByNumber = true;
+                }
+
+                if (
+                    collectionIndex === i ||
+                    lineIndexSelectedCell === lineIndex ||
+                    columnIndexSelectedCell === columnIndex
+                ) {
+                    cell.highlight = true;
+                }
+            });
+        });
+    }
+
+    create(level = 'average', number = NUMBER) {
         this.number = number;
         this.level = level;
 

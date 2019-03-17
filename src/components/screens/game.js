@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import Layout from '../layout/Layout';
 import Canvas from '../canvas/Canvas';
 import Numbers from '../numbers/numbers';
+import TopBar from '../top-bar/top-bar';
 
 
 class GameScreen extends Component {
@@ -13,6 +14,7 @@ class GameScreen extends Component {
     render() {
         return (
             <Layout>
+                <TopBar />
                 <Canvas />
                 <Numbers />
             </Layout>

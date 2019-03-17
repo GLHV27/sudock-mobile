@@ -12,10 +12,14 @@ class GameStore extends BasicStore {
     @observable canvas = [];
     @observable numbers = canvas.getNumbers();
     @observable selected = { collectionIndex: null, cellIndex: null };
+    @observable level = '';
+    @observable errors = {};
 
     @action onCreate = (level) => {
+        this.level = level;
         this.canvas = canvas.create(level);
         this.selected = { collectionIndex: null, cellIndex: null };
+        this.errors = { total: 3, count: 0 };
     }
 
     @action onSelect = (collectionIndex, cellIndex) => {
@@ -24,7 +28,7 @@ class GameStore extends BasicStore {
             cellIndex
         };
 
-        this.highlight();
+        canvas.highlight(this.canvas, collectionIndex, cellIndex);
     }
 
     @action onWrite = (number) => {
@@ -43,42 +47,13 @@ class GameStore extends BasicStore {
         if (cell.value !== number) {
             cell.isError = true;
             cell.number = number;
+            this.errors.count += 1;
         } else {
             cell.number = null;
             cell.isError = false;
             cell.visible = true;
             cell.isGuessed = true;
         }
-    }
-
-    highlight() {
-        const { collectionIndex, cellIndex } = this.selected;
-        const selectedCell = this.canvas[collectionIndex][cellIndex];
-        const lineIndexSelectedCell = canvas.getLineIndex(collectionIndex, cellIndex);
-        const columnIndexSelectedCell = canvas.getColumnIndex(collectionIndex, cellIndex);
-
-        this.canvas.forEach((collection, i) => {
-            collection.forEach((cell, j) => {
-                const isIdentical = selectedCell.visible && cell.visible && cell.value === selectedCell.value;
-                const lineIndex= canvas.getLineIndex(i, j);
-                const columnIndex = canvas.getColumnIndex(i, j);
-
-                cell.highlight = false;
-                cell.isHighlightByNumber = false;
-
-                if (isIdentical) {
-                    cell.isHighlightByNumber = true;
-                }
-
-                if (
-                    collectionIndex === i ||
-                    lineIndexSelectedCell === lineIndex ||
-                    columnIndexSelectedCell === columnIndex
-                ) {
-                    cell.highlight = true;
-                }
-            });
-        });
     }
 }
 

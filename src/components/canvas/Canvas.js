@@ -1,16 +1,16 @@
 import React from 'react';
 import {inject, observer} from 'mobx-react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import style from './style';
 import Collection from "../collection/Collection";
 
-@inject(({ game }) => ({
+@inject(({game}) => ({
     canvas: game.canvas,
 }))
 @observer
 export default class Canvas extends React.Component {
     render() {
-        const { canvas } = this.props;
+        const {canvas} = this.props;
 
         return (
             <View style={style.container}>
