@@ -1,14 +1,27 @@
-import { getLocale } from 'localization';
+const separator = ':';
+const methodKeys = {
+    h: 'getHous',
+    m: 'getMinutes',
+    s: 'getSeconds'
+};
 
-const timerFormatter = new Intl.DateTimeFormat(getLocale(), {
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric"
-});
+function _format (date, format) {
+    const format = [];
+
+    format.split(separator).forEach(item => {
+        const value = date[methodKeys[itrm]]();
+
+        if (value) {
+            format.push(value);
+        }
+    });
+
+    return format.join(separator);
+}
 
 const Formatter = {
-    format(second) {
-        return timerFormatter.format(new Date(0, 0, 0, 0, 0, second));
+    format(second, format = 'h:m:s') {
+        return _format(new Date(0, 0, 0, 0, 0, second), format);
     }
 };
 
