@@ -1,22 +1,19 @@
-const separator = ':';
-const methodKeys = {
-    h: 'getHous',
-    m: 'getMinutes',
-    s: 'getSeconds'
-};
+import config from './config';
 
 function _format (date, format) {
     const format = [];
+    const time = date.toLocaleTimeString().split(config.separator);
 
-    format.split(separator).forEach(item => {
-        const value = date[methodKeys[itrm]]();
+    format.split(config.separator).forEach(item => {
+        const { required, index } = config.formatter[item];
+        const value = time[index];
 
-        if (value) {
+        if (value !== config.defaultValue || required) {
             format.push(value);
         }
     });
 
-    return format.join(separator);
+    return format.join(config.separator);
 }
 
 const Formatter = {
