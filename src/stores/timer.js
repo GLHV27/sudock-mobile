@@ -25,8 +25,14 @@ class Timer extends BasicStore {
         clearInterval(this.id);
     }
 
+    @action playing = () => {
+        this.pause = false;
+        this.start();
+    }
+
     @action pause = () => {
         this.pause = true;
+        this.stop();
     }
 }
 
