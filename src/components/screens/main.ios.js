@@ -16,9 +16,11 @@ const actionSheetOptions = {
     cancelButtonIndex: 0,
 };
 
-@inject(({ nav, game }) => ({
+@inject(({ nav, game, timer }) => ({
     nav,
-    onCreateGame: game.onCreate
+    onCreateGame: game.onCreate,
+    time: timer.format,
+    level: game.level
 }))
 @observer
 class MainScreen extends Component {
@@ -33,6 +35,10 @@ class MainScreen extends Component {
         );
     }
 
+    _onContinueGame = () => {
+        this.props.nav.goTo('game');
+    }
+
     _onActionSheet = (index) => {
         if (index) {
             this.props.onCreateGame(levelKeys[index]);
@@ -41,8 +47,16 @@ class MainScreen extends Component {
     }
 
     render() {
+        const { timer, level } = this.props;
+
         return (
             <Layout>
+                {timer ? (
+                    <Button
+                        onPress={this._onContinueGame}
+                        title="Продолжить игру"
+                    />
+                ) : null}
                 <Button
                     onPress={this._onCreateNewGame}
                     title="Новая игра"

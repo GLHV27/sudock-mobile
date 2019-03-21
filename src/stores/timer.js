@@ -3,6 +3,7 @@ import BasicStore from "./basic-store";
 import Formatter from 'utils/formatter';
 
 class Timer extends BasicStore {
+    @observable pause = false;
     @observable time = 0;
     @observable format = Formatter.format(this.time);
     @observable id = null;
@@ -22,6 +23,10 @@ class Timer extends BasicStore {
 
     @action stop = () => {
         clearInterval(this.id);
+    }
+
+    @action pause = () => {
+        this.pause = true;
     }
 }
 
