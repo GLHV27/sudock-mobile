@@ -1,6 +1,6 @@
 const config = {
     separator: ':',
-    defaultValue: '00',
+    defaultValue: ['0', '00'],
     formatter: {
         h: {
             index: 0,
