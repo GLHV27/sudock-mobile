@@ -5,7 +5,7 @@ import BasicStore from "./basic-store";
 const keyApp = '9e44e3831bfc0ad568da38ac81eb67b6';
 
 class Storage extends BasicStore {
-    @observable load = false;
+    @observable loaded = false;
 
     constructor(...args) {
         super(...args);
@@ -34,9 +34,7 @@ class Storage extends BasicStore {
 
     _setData = async () => {
         try {
-            await AsyncStorage.setItem(keyApp, JSON.stringify(this.state), () => {
-                console.log(this.state);
-            });
+            await AsyncStorage.setItem(keyApp, JSON.stringify(this.state));
         } catch (error) {
             alert('Error: AppStorage - _setData');
         }
@@ -47,7 +45,8 @@ class Storage extends BasicStore {
             this.state = JSON.parse(result);
         }
 
-        this.load = true;
+        this.loadedStorage(this.state);
+        this.loaded = true;
     }
 }
 
