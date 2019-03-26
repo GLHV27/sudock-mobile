@@ -4,7 +4,7 @@ import {Text, View} from "react-native";
 import style from "./style";
 
 @inject(({ timer }) => ({
-    time: timer.format,
+    time: timer.time,
     onStart: timer.start,
     onStop: timer.stop,
 }))

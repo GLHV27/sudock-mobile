@@ -6,7 +6,9 @@ import Layout from 'components/layout/Layout';
 
 @inject(({ nav, game }) => ({
     nav,
-    onCreateGame: game.onCreate
+    onCreateGame: game.onCreate,
+    time: timer.time,
+    level: game.level
 }))
 @observer
 class MainScreen extends Component {
@@ -20,8 +22,16 @@ class MainScreen extends Component {
     }
 
     render() {
+        const { timer, level } = this.props;
+
         return (
             <Layout>
+                {level ? (
+                    <Button
+                        onPress={this._onContinueGame}
+                        title="Продолжить игру"
+                    />
+                ) : null}
                 <Button
                     onPress={this._onCreateNewGame}
                     title="Новая игра"

@@ -19,7 +19,7 @@ const actionSheetOptions = {
 @inject(({ nav, game, timer }) => ({
     nav,
     onCreateGame: game.onCreate,
-    time: timer.format,
+    time: timer.time,
     level: game.level
 }))
 @observer
@@ -51,7 +51,7 @@ class MainScreen extends Component {
 
         return (
             <Layout>
-                {timer ? (
+                {level ? (
                     <Button
                         onPress={this._onContinueGame}
                         title="Продолжить игру"

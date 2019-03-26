@@ -1,8 +1,8 @@
-import {observable, action} from 'mobx';
+import { observable, action } from 'mobx';
 import BasicStore from "./basic-store";
 import Formatter from 'utils/formatter';
 
-class Timer extends BasicStore {
+class TimerStore extends BasicStore {
     @observable pause = false;
     @observable time = 0;
     @observable format = Formatter.format(this.time);
@@ -11,6 +11,8 @@ class Timer extends BasicStore {
     @action _step = (time = this.time + 1) => {
         this.time = time;
         this.format = Formatter.format(this.time);
+
+        this.getStore('storage').setState({ timer: this.time });
     }
 
     reset() {
@@ -36,4 +38,4 @@ class Timer extends BasicStore {
     }
 }
 
-export default Timer;
+export default TimerStore;
