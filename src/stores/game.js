@@ -1,19 +1,25 @@
 import {observable, computed, action} from 'mobx';
 import BasicStore from './basic-store';
-import Canvas from './canvas';
+import Canvas from './helpers/canvas';
 
 const canvas = new Canvas();
 
 class GameStore extends BasicStore {
-    constructor(...args) {
-        super(...args);
-    }
-
     @observable canvas = [];
     @observable numbers = canvas.getNumbers();
     @observable selected = { collectionIndex: null, cellIndex: null };
     @observable level = '';
     @observable errors = {};
+
+    @action initState = ({
+        selected = this.selected,
+        canvas = this.canvas,
+        level = this.level
+    }) => {
+        this.selected = selected;
+        this.canvas = canvas;
+        this.level = level;
+    }
 
     @action onCreate = (level) => {
         const timer = this.getStore('timer');
@@ -23,6 +29,8 @@ class GameStore extends BasicStore {
         this.canvas = canvas.create(level);
         this.selected = { collectionIndex: null, cellIndex: null };
         this.errors = { total: 3, count: 0 };
+
+        this.getStorage().setState({ level: this.level });
     }
 
     @action onSelect = (collectionIndex, cellIndex) => {
@@ -31,6 +39,7 @@ class GameStore extends BasicStore {
             cellIndex
         };
 
+        this.getStorage().setState({ selected: this.selected });
         canvas.highlight(this.canvas, collectionIndex, cellIndex);
     }
 
@@ -57,6 +66,8 @@ class GameStore extends BasicStore {
             cell.visible = true;
             cell.isGuessed = true;
         }
+
+        this.getStorage().setState({ canvas: this.canvas });
     }
 }
 

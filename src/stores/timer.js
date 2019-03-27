@@ -8,15 +8,15 @@ class TimerStore extends BasicStore {
     @observable format = Formatter.format(this.time);
     @observable id = null;
 
-    @action initState = (storage) => {
-        this.time = storage.timer || 0;
+    @action initState = ({ timer = this.time }) => {
+        this.time = timer;
     }
 
     @action _step = (time = this.time + 1) => {
         this.time = time;
         this.format = Formatter.format(this.time);
 
-        this.getStore('storage').setState({ timer: this.time });
+        this.getStorage().setState({ timer: this.time });
     }
 
     reset() {

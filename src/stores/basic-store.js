@@ -1,13 +1,17 @@
 export default class BasicStore {
     constructor(stores) {
-        this._stores = stores
+        this._stores = stores;
     }
 
     getStore(storeName) {
-        return this._stores[storeName]
+        return this._stores[storeName];
     }
 
-    loadedStorage(data) {
+    getStorage() {
+        return this.getStore('storage');
+    }
+
+    storageLoaded(data) {
         for (let nameStore in this._stores) {
             const store = this._stores[nameStore];
 

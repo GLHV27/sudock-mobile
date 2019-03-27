@@ -43,9 +43,9 @@ class Storage extends BasicStore {
     @action _initState = (err, result) => {
         if (result !== null) {
             this.state = JSON.parse(result);
+            this.storageLoaded(this.state);
         }
 
-        this.loadedStorage(this.state);
         this.loaded = true;
     }
 }
