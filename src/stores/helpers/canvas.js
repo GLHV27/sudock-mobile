@@ -1,4 +1,5 @@
 import random from "lodash/random";
+import shuffle from "lodash/shuffle";
 
 const NUMBER = 3;
 const levelsParams = {
@@ -32,9 +33,7 @@ class Canvas {
 
     _createMatrix() {
         this.matrix = this._getList();
-		this.numbers = this.getNumbers();
-
-        this._randomList(this.numbers);
+		this.numbers = shuffle(this.getNumbers());
 
 		for (let i = 0; i < this.numbers.length; i++) {
 			this._fillLine(this.matrix[i], i);
@@ -44,15 +43,6 @@ class Canvas {
 
         return this.matrix;
     }
-
-	_randomList(list) {
-		for (let i = 0; i < list.length - 1; i++) {
-			const index = random(i + 1, list.length - 1);
-			const number = list[i];
-			list[i] = list[index];
-			list[index] = number;
-		}
-	}
 
 	_randomMatrix() {
 		for (let i = 0; i < this.numbers.length - 1; i++) {

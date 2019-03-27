@@ -5,6 +5,7 @@ import Canvas from './helpers/canvas';
 const canvas = new Canvas();
 
 class GameStore extends BasicStore {
+    @observable isEnd = false;
     @observable canvas = [];
     @observable numbers = canvas.getNumbers();
     @observable selected = { collectionIndex: null, cellIndex: null };
@@ -14,23 +15,23 @@ class GameStore extends BasicStore {
     @action initState = ({
         selected = this.selected,
         canvas = this.canvas,
-        level = this.level
+        level = this.level,
+        errors = this.errors
     }) => {
         this.selected = selected;
         this.canvas = canvas;
         this.level = level;
+        this.errors = errors;
     }
 
     @action onCreate = (level) => {
-        const timer = this.getStore('timer');
-
-        timer.reset();
         this.level = level;
         this.canvas = canvas.create(level);
         this.selected = { collectionIndex: null, cellIndex: null };
         this.errors = { total: 3, count: 0 };
+        this.getStore('timer').reset();
 
-        this.getStorage().setState({ level: this.level });
+        this._setStorage();
     }
 
     @action onSelect = (collectionIndex, cellIndex) => {
@@ -39,7 +40,7 @@ class GameStore extends BasicStore {
             cellIndex
         };
 
-        this.getStorage().setState({ selected: this.selected });
+        this._setStorage();
         canvas.highlight(this.canvas, collectionIndex, cellIndex);
     }
 
@@ -67,7 +68,27 @@ class GameStore extends BasicStore {
             cell.isGuessed = true;
         }
 
-        this.getStorage().setState({ canvas: this.canvas });
+        if (this.errors.total === this.errors.count) {
+            this.isEnd = true;
+            return;
+        }
+
+        this._setStorage();
+    }
+
+    @action onEnd = () => {
+        this.isEnd = false;
+        this.level = '';
+        this.getStore('timer').reset();
+    }
+
+    _setStorage() {
+        this.getStorage().setState({
+            canvas: this.canvas,
+            selected: this.selected,
+            level: this.level,
+            errors: this.errors
+        });
     }
 }
 
