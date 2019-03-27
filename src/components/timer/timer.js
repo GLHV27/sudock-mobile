@@ -1,6 +1,6 @@
 import {inject, observer} from "mobx-react";
 import React from "react";
-import {Text, View} from "react-native";
+import { AppState, Text, View } from "react-native";
 import style from "./style";
 
 @inject(({ timer }) => ({
@@ -12,10 +12,20 @@ import style from "./style";
 export default class Timer extends React.Component {
     componentDidMount() {
         this.props.onStart();
+        AppState.addEventListener('change', this._handleAppStateChange);
     }
 
     componentWillUnmount() {
         this.props.onStop();
+        AppState.removeEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (nextAppState === 'active') {
+            this.props.onStart();
+        } else {
+            this.props.onStop();
+        }
     }
 
     render() {
