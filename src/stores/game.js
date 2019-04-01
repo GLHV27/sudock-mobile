@@ -1,18 +1,31 @@
 import {observable, computed, action} from 'mobx';
 import BasicStore from './basic-store';
-import Canvas from './helpers/canvas';
+import Canvas from 'stores/helpers/canvas';
+import History from 'stores/helpers/history';
+import Storage from 'stores/helpers/storage';
 
 const canvas = new Canvas();
+const history = new History();
 
 class GameStore extends BasicStore {
     @observable isEnd = false;
+    @observable loaded = false;
     @observable canvas = [];
     @observable numbers = canvas.getNumbers();
     @observable selected = { collectionIndex: null, cellIndex: null };
     @observable level = '';
     @observable errors = {};
 
-    @action initState = ({
+    constructor(...args) {
+        super(...args);
+
+        this.storage = new Storage({
+            key: 'game',
+            onLoaded: this._initState
+        });
+    }
+
+    @action _initState = ({
         selected = this.selected,
         canvas = this.canvas,
         level = this.level,
@@ -22,6 +35,7 @@ class GameStore extends BasicStore {
         this.canvas = canvas;
         this.level = level;
         this.errors = errors;
+        this.loaded = true;
     }
 
     @action onCreate = (level) => {
@@ -42,6 +56,7 @@ class GameStore extends BasicStore {
 
         this._setStorage();
         canvas.highlight(this.canvas, collectionIndex, cellIndex);
+        history.put({selected: this.selected});
     }
 
     @action onWrite = (number) => {
@@ -83,7 +98,7 @@ class GameStore extends BasicStore {
     }
 
     _setStorage() {
-        this.getStorage().setState({
+        this.storage.setState({
             canvas: this.canvas,
             selected: this.selected,
             level: this.level,

@@ -1,16 +1,18 @@
-import { observable, action } from 'mobx';
 import { AsyncStorage } from 'react-native';
-import BasicStore from "./basic-store";
 
-const keyApp = '9e44e3831bfc0ad568da38ac81eb67b6';
+const PREFIX_KEY = '9e44e3831bfc0ad568da38ac81eb67b6:';
 
-class Storage extends BasicStore {
-    @observable loaded = false;
-
-    constructor(...args) {
-        super(...args);
+class Storage {
+    constructor({ key = '', onLoaded = Function.prototype }) {
+        if (!key) {
+            console.error('You did not pass the key');
+            return;
+        }
 
         this.state = {};
+
+        this.key = `${PREFIX_KEY}${key}`;
+        this.onLoaded = onLoaded;
 
         this._retrieveData();
     }
@@ -26,7 +28,7 @@ class Storage extends BasicStore {
 
     _retrieveData = async () => {
         try {
-            await AsyncStorage.getItem(keyApp, this._initState);
+            await AsyncStorage.getItem(this.key, this._initState);
         } catch (error) {
             alert('Error: AppStorage - _retrieveData');
         }
@@ -34,19 +36,18 @@ class Storage extends BasicStore {
 
     _setData = async () => {
         try {
-            await AsyncStorage.setItem(keyApp, JSON.stringify(this.state));
+            await AsyncStorage.setItem(this.key, JSON.stringify(this.state));
         } catch (error) {
             alert('Error: AppStorage - _setData');
         }
     }
 
-    @action _initState = (err, result) => {
+    _initState = (err, result) => {
         if (result !== null) {
             this.state = JSON.parse(result);
-            this.storageLoaded(this.state);
         }
 
-        this.loaded = true;
+        this.onLoaded(this.state);
     }
 }
 
