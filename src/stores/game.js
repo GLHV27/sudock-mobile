@@ -10,6 +10,7 @@ const history = new History();
 class GameStore extends BasicStore {
     @observable isEnd = false;
     @observable loaded = false;
+    @observable isHaveHistory = false;
     @observable canvas = [];
     @observable numbers = canvas.getNumbers();
     @observable selected = { collectionIndex: null, cellIndex: null };
@@ -45,6 +46,7 @@ class GameStore extends BasicStore {
         this.errors = { total: 3, count: 0 };
         this.getStore('timer').reset();
 
+        history.clear();
         this._setStorage();
     }
 
@@ -72,6 +74,8 @@ class GameStore extends BasicStore {
             return;
         }
 
+        history.put({ canvas: this.canvas });
+
         if (cell.value !== number) {
             cell.isError = true;
             cell.number = number;
@@ -95,6 +99,15 @@ class GameStore extends BasicStore {
         this.isEnd = false;
         this.level = '';
         this.getStore('timer').reset();
+    }
+
+    @action onBack = () => {
+        ({
+            canvas: this.canvas = this.canvas,
+            selected: this.selected = this.selected
+        } = history.back());
+
+        this.isHaveHistory = history.isEmpty();
     }
 
     _setStorage() {
