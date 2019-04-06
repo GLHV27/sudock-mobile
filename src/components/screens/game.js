@@ -4,6 +4,7 @@ import Layout from '../layout/Layout';
 import Canvas from '../canvas/Canvas';
 import Numbers from '../numbers/numbers';
 import TopBar from '../top-bar/top-bar';
+import BottomBar from '../bottom-bar/bottom-bar';
 
 
 class GameScreen extends Component {
@@ -16,6 +17,7 @@ class GameScreen extends Component {
             <Layout>
                 <TopBar />
                 <Canvas />
+                <BottomBar />
                 <Numbers />
             </Layout>
         )

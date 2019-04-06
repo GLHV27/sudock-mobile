@@ -24,7 +24,7 @@ class History {
     back() {
         const lastIndex = this.stack.length - 1;
         const lastStep = this.stack[lastIndex];
-        this.stack = this.stack[0, lastIndex];
+        this.stack.pop();
 
         return lastStep;
     }

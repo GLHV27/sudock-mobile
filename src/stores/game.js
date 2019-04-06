@@ -59,6 +59,7 @@ class GameStore extends BasicStore {
         this._setStorage();
         canvas.highlight(this.canvas, collectionIndex, cellIndex);
         history.put({selected: this.selected});
+        this.isHaveHistory = true;
     }
 
     @action onWrite = (number) => {
@@ -75,6 +76,7 @@ class GameStore extends BasicStore {
         }
 
         history.put({ canvas: this.canvas });
+        this.isHaveHistory = true;
 
         if (cell.value !== number) {
             cell.isError = true;
