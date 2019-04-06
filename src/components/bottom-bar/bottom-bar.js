@@ -6,6 +6,7 @@ import localization from 'localization/index';
 
 @inject(({ game }) => ({
     onBack: game.onBack,
+    onClearCell: game.onClearCell,
     isHaveHistory: game.isHaveHistory
 }))
 @observer
@@ -14,6 +15,10 @@ export default class BottomBar extends React.Component {
         if (this.props.isHaveHistory) {
             this.props.onBack();
         }
+    }
+
+    _onClearCell = () => {
+        this.props.onClearCell();
     }
 
     render() {
@@ -31,7 +36,11 @@ export default class BottomBar extends React.Component {
                     </TouchableOpacity>
                 </View>
                 <View style={[style.item, style.itemCenter]}>
-                    <Text>Очистить</Text>
+                    <TouchableOpacity
+                        onPress={this._onClearCell}
+                    >
+                        <Text>Очистить</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );

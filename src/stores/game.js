@@ -51,6 +51,14 @@ class GameStore extends BasicStore {
     }
 
     @action onSelect = (collectionIndex, cellIndex) => {
+        if (
+            this.selected.collectionIndex === collectionIndex &&
+            this.selected.cellIndex === cellIndex
+        ) {
+            return;
+        }
+
+        history.put({selected: this.selected});
         this.selected = {
             collectionIndex,
             cellIndex
@@ -58,7 +66,6 @@ class GameStore extends BasicStore {
 
         this._setStorage();
         canvas.highlight(this.canvas, collectionIndex, cellIndex);
-        history.put({selected: this.selected});
         this.isHaveHistory = true;
     }
 
@@ -71,7 +78,7 @@ class GameStore extends BasicStore {
 
         const cell = this.canvas[collectionIndex][cellIndex];
 
-        if (cell.visible) {
+        if (cell.visible || cell.number === number) {
             return;
         }
 
@@ -89,7 +96,7 @@ class GameStore extends BasicStore {
             cell.isGuessed = true;
         }
 
-        if (this.errors.total === this.errors.count) {
+        if (this.errors.total <= this.errors.count) {
             this.isEnd = true;
             return;
         }
@@ -104,12 +111,30 @@ class GameStore extends BasicStore {
     }
 
     @action onBack = () => {
-        ({
-            canvas: this.canvas = this.canvas,
-            selected: this.selected = this.selected
-        } = history.back());
+        const { canvas: cnvs, selected } = history.back();
+
+        if (cnvs) {
+            this.canvas = cnvs;
+        }
+
+        if (selected) {
+            this.selected = selected;
+            canvas.highlight(this.canvas, this.selected.collectionIndex, this.selected.cellIndex);
+        }
 
         this.isHaveHistory = history.isEmpty();
+    }
+
+    @action onClearCell = () => {
+        const { collectionIndex, cellIndex } = this.selected;
+        const cell = this.canvas[collectionIndex][cellIndex];
+
+        if (cell.visible || !cell.isError) {
+            return;
+        }
+
+        cell.isError = false;
+        cell.number = null;
     }
 
     _setStorage() {
