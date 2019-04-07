@@ -19,7 +19,7 @@ export default class TopBar extends React.Component {
                     <Text>{localization.levels[level]}</Text>
                 </View>
                 <View style={[style.item, {textAlign: 'center'}]}>
-                    <Text>{`${errors.count}/${errors.total}`}</Text>
+                    <Text>{localization.errors}: {`${errors.count}/${errors.total}`}</Text>
                 </View>
                 <View style={[style.item, {textAlign: 'right'}]}>
                     <Timer />

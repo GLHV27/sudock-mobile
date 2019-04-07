@@ -32,14 +32,14 @@ export default class BottomBar extends React.Component {
                         activeOpacity={isHaveHistory ? 0.2 : 0.5}
                         style={[!isHaveHistory ? style.disable : null]}
                     >
-                        <Text>Назад</Text>
+                        <Text>{localization.back}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={[style.item, style.itemCenter]}>
                     <TouchableOpacity
                         onPress={this._onClearCell}
                     >
-                        <Text>Очистить</Text>
+                        <Text>{localization.clear}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -4,16 +4,19 @@ import { inject, observer } from 'mobx-react';
 import CustomModal from 'components/modal/modal';
 
 @inject(({ nav, game, timer }) => ({
-    nav,
     isEnd: game.isEnd,
     onEnd: game.onEnd,
+    onContinue: game.onContinue,
     time: timer.time,
 }))
 @observer
 class ModalEndGame extends Component {
-    _onEnd = () => {
-        this.props.onEnd();
-        this.props.nav.goTo('main');
+    _onContinue = () => {
+        this.props.onContinue();
+    }
+
+    _onNewGame = () => {
+
     }
 
     render() {
@@ -21,11 +24,15 @@ class ModalEndGame extends Component {
 
         return (
             <CustomModal visible={isEnd}>
-                <Text>Игра закончина</Text>
-                <Text>{time}</Text>
+                <Text>Игра окончена</Text>
+                <Text>Вы совершили 3 ошибки и проиграли эту игру</Text>
                 <Button
-                    onPress={this._onEnd}
-                    title="На главную"
+                    onPress={this._onContinue}
+                    title="Второй шанс"
+                />
+                <Button
+                    onPress={this._onNewGame}
+                    title="Новая игра"
                 />
             </CustomModal>
         )

@@ -103,6 +103,7 @@ class GameStore extends BasicStore {
         if (this.errors.total <= this.errors.count) {
             this.getStore('timer').stop();
             this.isEnd = true;
+            this.isCanContinue = false;
             return;
         }
 
@@ -111,8 +112,13 @@ class GameStore extends BasicStore {
 
     @action onEnd = () => {
         this.isEnd = false;
-        this.isCanContinue = false;
         this.storage.clear();
+    }
+
+    @action onContinue = () => {
+        this.errors.count -= 1;
+        this.isEnd = false;
+        this.getStore('timer').start();
     }
 
     @action onBack = () => {
