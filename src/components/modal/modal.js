@@ -4,17 +4,17 @@ import style from './style';
 
 export default class CustomModal extends React.Component {
     render() {
-        const { isVivible, animationType = 'fade' } = this.props;
+        const { visible, animationType = 'fade', children } = this.props;
 
         return (
             <Modal
-                visible={isVivible}
+                visible={visible}
                 transparent={true}
                 animationType={animationType}
             >
                 <View style={style.background}>
                     <View style={style.container}>
-                        <Text>123456</Text>
+                        {children}
                     </View>
                 </View>
             </Modal>

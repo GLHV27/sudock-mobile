@@ -10,6 +10,7 @@ const history = new History();
 class GameStore extends BasicStore {
     @observable isEnd = false;
     @observable loaded = false;
+    @observable isCanContinue = false;
     @observable isHaveHistory = false;
     @observable canvas = [];
     @observable numbers = canvas.getNumbers();
@@ -30,18 +31,21 @@ class GameStore extends BasicStore {
         selected = this.selected,
         canvas = this.canvas,
         level = this.level,
-        errors = this.errors
+        errors = this.errors,
+        isCanContinue = this.isCanContinue
     }) => {
         this.selected = selected;
         this.canvas = canvas;
         this.level = level;
         this.errors = errors;
+        this.isCanContinue = isCanContinue;
         this.loaded = true;
     }
 
     @action onCreate = (level) => {
         this.level = level;
         this.canvas = canvas.create(level);
+        this.isCanContinue = true;
         this.selected = { collectionIndex: null, cellIndex: null };
         this.errors = { total: 3, count: 0 };
         this.getStore('timer').reset();
@@ -97,6 +101,7 @@ class GameStore extends BasicStore {
         }
 
         if (this.errors.total <= this.errors.count) {
+            this.getStore('timer').stop();
             this.isEnd = true;
             return;
         }
@@ -106,8 +111,8 @@ class GameStore extends BasicStore {
 
     @action onEnd = () => {
         this.isEnd = false;
-        this.level = '';
-        this.getStore('timer').reset();
+        this.isCanContinue = false;
+        this.storage.clear();
     }
 
     @action onBack = () => {
@@ -142,7 +147,8 @@ class GameStore extends BasicStore {
             canvas: this.canvas,
             selected: this.selected,
             level: this.level,
-            errors: this.errors
+            errors: this.errors,
+            isCanContinue: this.isCanContinue
         });
     }
 }

@@ -3,6 +3,8 @@ import BasicStore from "./basic-store";
 import Formatter from 'utils/formatter';
 import Storage from 'stores/helpers/storage';
 
+const SECOND = 1000;
+
 class TimerStore extends BasicStore {
     @observable pause = false;
     @observable time = 0;
@@ -34,11 +36,16 @@ class TimerStore extends BasicStore {
     }
 
     @action start = () => {
-        this.id = setInterval(this._step, 1000);
+        if (this.id) {
+            return;
+        }
+
+        this.id = setInterval(this._step, SECOND);
     }
 
     @action stop = () => {
         clearInterval(this.id);
+        this.id = null;
     }
 
     @action playing = () => {

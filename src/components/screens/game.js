@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import Layout from '../layout/Layout';
-import Canvas from '../canvas/Canvas';
-import Numbers from '../numbers/numbers';
-import TopBar from '../top-bar/top-bar';
-import BottomBar from '../bottom-bar/bottom-bar';
-
+import Layout from 'components/layout/Layout';
+import Canvas from 'components/canvas/Canvas';
+import Numbers from 'components/numbers/numbers';
+import TopBar from 'components/top-bar/top-bar';
+import BottomBar from 'components/bottom-bar/bottom-bar';
+import ModalEndGame from 'components/screens/modal-end-game';
 
 class GameScreen extends Component {
     static navigationOptions = {
@@ -19,6 +19,7 @@ class GameScreen extends Component {
                 <Canvas />
                 <BottomBar />
                 <Numbers />
+                <ModalEndGame />
             </Layout>
         )
     }

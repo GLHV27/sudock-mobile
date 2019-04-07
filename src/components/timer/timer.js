@@ -3,7 +3,8 @@ import React from "react";
 import { AppState, Text, View } from "react-native";
 import style from "./style";
 
-@inject(({ timer }) => ({
+@inject(({ timer, game }) => ({
+    isEnd: game.isEnd,
     time: timer.time,
     onStart: timer.start,
     onStop: timer.stop,
@@ -21,6 +22,10 @@ export default class Timer extends React.Component {
     }
 
     _handleAppStateChange = (nextAppState) => {
+        if (this.props.isEnd) {
+            return;
+        }
+
         if (nextAppState === 'active') {
             this.props.onStart();
         } else {

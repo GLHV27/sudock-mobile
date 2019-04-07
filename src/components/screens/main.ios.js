@@ -20,7 +20,8 @@ const actionSheetOptions = {
     nav,
     onCreateGame: game.onCreate,
     time: timer.time,
-    level: game.level
+    level: game.level,
+    isCanContinue: game.isCanContinue
 }))
 @observer
 class MainScreen extends Component {
@@ -47,11 +48,11 @@ class MainScreen extends Component {
     }
 
     render() {
-        const { timer, level } = this.props;
+        const { timer, level, isCanContinue } = this.props;
 
         return (
             <Layout>
-                {level ? (
+                {isCanContinue ? (
                     <Button
                         onPress={this._onContinueGame}
                         title="Продолжить игру"

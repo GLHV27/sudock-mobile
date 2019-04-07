@@ -26,6 +26,12 @@ class Storage {
         this._setData();
     }
 
+    clear() {
+        this.state = {};
+
+        this._setData();
+    }
+
     _retrieveData = async () => {
         try {
             await AsyncStorage.getItem(this.key, this._initState);
