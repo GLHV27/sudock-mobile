@@ -1,25 +1,6 @@
 import random from "lodash/random";
 import shuffle from "lodash/shuffle";
-
-const NUMBER = 3;
-const levelsParams = {
-    easy: {
-    	count: 38,
-		countVisibleInCollection: 5
-    },
-    average: {
-        count: 30,
-        countVisibleInCollection: 4
-    },
-	complex: {
-        count: 25,
-        countVisibleInCollection: 3
-    },
-	expert: {
-        count: 20,
-        countVisibleInCollection: 3
-    }
-};
+import { NUMBER, levelsParams } from "components/config";
 
 class Canvas {
 	constructor() {

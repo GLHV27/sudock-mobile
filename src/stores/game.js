@@ -3,6 +3,8 @@ import BasicStore from './basic-store';
 import Canvas from 'stores/helpers/canvas';
 import History from 'stores/helpers/history';
 import Storage from 'stores/helpers/storage';
+import { NUMBER, levelsParams } from "components/config";
+import { onError } from 'mobx-react';
 
 const canvas = new Canvas();
 const history = new History();
@@ -17,6 +19,7 @@ class GameStore extends BasicStore {
     @observable selected = { collectionIndex: null, cellIndex: null };
     @observable level = '';
     @observable errors = {};
+    @observable totalFilled = 0;
 
     constructor(...args) {
         super(...args);
@@ -32,12 +35,14 @@ class GameStore extends BasicStore {
         canvas = this.canvas,
         level = this.level,
         errors = this.errors,
+        totalFilled = this.totalFilled,
         isCanContinue = this.isCanContinue
     }) => {
         this.selected = selected;
         this.canvas = canvas;
         this.level = level;
         this.errors = errors;
+        this.totalFilled = totalFilled;
         this.isCanContinue = isCanContinue;
         this.loaded = true;
     }
@@ -46,6 +51,8 @@ class GameStore extends BasicStore {
         this.level = level;
         this.canvas = canvas.create(level);
         this.isCanContinue = true;
+        this.isEnd = false;
+        this.totalFilled = levelsParams[level].count;
         this.selected = { collectionIndex: null, cellIndex: null };
         this.errors = { total: 3, count: 0 };
         this.getStore('timer').reset();
@@ -98,19 +105,21 @@ class GameStore extends BasicStore {
             cell.isError = false;
             cell.visible = true;
             cell.isGuessed = true;
+            this.totalFilled += 1;
         }
 
-        if (this.errors.total <= this.errors.count) {
-            this.getStore('timer').stop();
-            this.isEnd = true;
-            this.isCanContinue = false;
+        if (
+            this.errors.total <= this.errors.count ||
+            Math.pow(NUMBER, 4) <= this.totalFilled
+        ) {
+            this.onEnd();
             return;
         }
 
         this._setStorage();
     }
 
-    @action onEnd = () => {
+    @action onClose = () => {
         this.isEnd = false;
         this.storage.clear();
     }
@@ -119,6 +128,12 @@ class GameStore extends BasicStore {
         this.errors.count -= 1;
         this.isEnd = false;
         this.getStore('timer').start();
+    }
+
+    @action onEnd = () => {
+        this.getStore('timer').stop();
+        this.isEnd = true;
+        this.isCanContinue = false;
     }
 
     @action onBack = () => {
@@ -154,6 +169,7 @@ class GameStore extends BasicStore {
             selected: this.selected,
             level: this.level,
             errors: this.errors,
+            totalFilled: this.totalFilled,
             isCanContinue: this.isCanContinue
         });
     }

@@ -6,6 +6,7 @@ import Numbers from 'components/numbers/numbers';
 import TopBar from 'components/top-bar/top-bar';
 import BottomBar from 'components/bottom-bar/bottom-bar';
 import ModalEndGame from 'components/screens/modal-end-game';
+import ModalGamePassed from 'components/screens/modal-game-passed';
 
 class GameScreen extends Component {
     static navigationOptions = {
@@ -20,6 +21,7 @@ class GameScreen extends Component {
                 <BottomBar />
                 <Numbers />
                 <ModalEndGame />
+                <ModalGamePassed />
             </Layout>
         )
     }
