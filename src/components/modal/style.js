@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export const def = StyleSheet.create({
     background: {
         flex: 1,
         justifyContent: 'center',
@@ -21,4 +21,9 @@ export default StyleSheet.create({
         borderBottomRightRadius: 5,
         borderTopLeftRadius: 5
     }
+});
+
+export const full = StyleSheet.create({
+    background: {},
+    container: {}
 });

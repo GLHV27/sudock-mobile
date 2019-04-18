@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, View, Text } from 'react-native';
-import style from './style';
+import { def, full } from './style';
 
 export default class CustomModal extends React.Component {
     render() {
@@ -10,6 +10,7 @@ export default class CustomModal extends React.Component {
             transparent = true,
             children
         } = this.props;
+        const style = transparent ? def : full;
 
         return (
             <Modal

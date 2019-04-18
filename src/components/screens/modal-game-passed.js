@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text, Button, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
 import { inject, observer } from 'mobx-react';
 import CustomModal from 'components/modal/modal';
 
@@ -13,7 +14,7 @@ class ModalGamePassed extends Component {
 
         return (
             <CustomModal visible={isEnd} transparent={false}>
-                <Text>Passed</Text>
+                <Button title={'На главную'} />
             </CustomModal>
         )
     }
