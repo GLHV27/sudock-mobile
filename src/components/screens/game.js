@@ -5,7 +5,7 @@ import Canvas from 'components/canvas/Canvas';
 import Numbers from 'components/numbers/numbers';
 import TopBar from 'components/top-bar/top-bar';
 import BottomBar from 'components/bottom-bar/bottom-bar';
-import ModalEndGame from 'components/screens/modal-end-game';
+import ModalEndGame from './modal-end-game';
 import ModalGamePassed from 'components/screens/modal-game-passed';
 
 class GameScreen extends Component {
