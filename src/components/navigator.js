@@ -1,7 +1,7 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import MainScreen from './screens/main';
-import GameScreen from './screens/game';
-
+import MainScreen from './screens/main/main';
+import GameScreen from 'components/screens/game';
+import SettingsScreen from 'components/screens/settings';
 
 const StackNavigator = createStackNavigator({
     main: {
@@ -10,6 +10,17 @@ const StackNavigator = createStackNavigator({
     game: {
         screen: GameScreen,
     },
+    // settings: {
+    //     screen: SettingsStackNavigator
+    // }
+})
+
+const SettingsStackNavigator = createStackNavigator({
+    main: {
+        screen: SettingsScreen
+    }
+}, {
+    mode: 'modal'
 })
 
 export default createAppContainer(StackNavigator)

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {inject, observer} from 'mobx-react';
-import { StyleSheet, Button, ActionSheetIOS } from 'react-native';
+import { ActionSheetIOS, View } from 'react-native';
 import localization from 'localization';
 import { levelKeys } from 'components/config';
 import Layout from 'components/layout/Layout';
+import Button from 'components/button/button';
+import style from './style';
 
 const actionSheetOptions = {
     options: [
@@ -47,28 +49,39 @@ class MainScreen extends Component {
         }
     }
 
+    _onSettings = () => {
+        this.props.nav.goTo('settings');
+    }
+
     render() {
-        const { timer, level, isCanContinue } = this.props;
+        const { time, level, isCanContinue } = this.props;
 
         return (
             <Layout>
                 {isCanContinue ? (
-                    <Button
-                        onPress={this._onContinueGame}
-                        title="Продолжить игру"
-                    />
+                    <View style={style.item}>
+                        <Button
+                            onPress={this._onContinueGame}
+                            title={`Продолжить игру\n (${time} - ${localization.levels[level]})`}
+                        />
+                    </View>
                 ) : null}
-                <Button
-                    onPress={this._onCreateNewGame}
-                    title="Новая игра"
-                />
+                <View style={style.item}>
+                    <Button
+                        onPress={this._onCreateNewGame}
+                        title="Новая игра"
+                    />
+                </View>
+                <View style={style.item}>
+                    <Button
+                        onPress={this._onSettings}
+                        title="Настройки"
+                    />
+                </View>
             </Layout>
         )
     }
 
 }
-
-const styles = StyleSheet.create({
-})
 
 export default MainScreen

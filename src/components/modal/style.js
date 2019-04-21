@@ -25,9 +25,14 @@ export const def = StyleSheet.create({
 
 export const full = StyleSheet.create({
     background: {
-
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     container: {
-        
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingTop: 10,
+        paddingBottom: 10
     }
 });

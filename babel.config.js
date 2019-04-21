@@ -4,7 +4,8 @@ module.exports = function(api) {
     presets: ['babel-preset-expo'],
     plugins: [
         ["module-resolver",{
-            root: ["./src"]
+            root: ["./src"],
+            extensions: [".js", ".ios.js", ".android.js"]
         }]
     ]
   };
