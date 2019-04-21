@@ -4,7 +4,6 @@ import Canvas from 'stores/helpers/canvas';
 import History from 'stores/helpers/history';
 import Storage from 'stores/helpers/storage';
 import { NUMBER, levelsParams } from "components/config";
-import { onError } from 'mobx-react';
 
 const canvas = new Canvas();
 const history = new History();

@@ -13,7 +13,7 @@ const actionSheetOptions = {
         localization.levels.complex,
         localization.levels.expert,
     ],
-    cancelButtonIndex: 0,
+    cancelButtonIndex: 0
 };
 
 @inject(({ game, nav }) => ({

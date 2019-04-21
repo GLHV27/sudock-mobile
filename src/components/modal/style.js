@@ -24,6 +24,10 @@ export const def = StyleSheet.create({
 });
 
 export const full = StyleSheet.create({
-    background: {},
-    container: {}
+    background: {
+
+    },
+    container: {
+        
+    }
 });
