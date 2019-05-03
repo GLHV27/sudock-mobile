@@ -5,7 +5,7 @@ import style from "./style";
 
 @inject(({ timer, game }) => ({
     isEnd: game.isEnd,
-    time: timer.time,
+    time: timer.format,
     onStart: timer.start,
     onStop: timer.stop,
 }))

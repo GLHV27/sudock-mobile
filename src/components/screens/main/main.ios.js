@@ -21,7 +21,7 @@ const actionSheetOptions = {
 @inject(({ nav, game, timer }) => ({
     nav,
     onCreateGame: game.onCreate,
-    time: timer.time,
+    time: timer.format,
     level: game.level,
     isCanContinue: game.isCanContinue
 }))

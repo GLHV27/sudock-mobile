@@ -3,7 +3,7 @@ import BasicStore from "./basic-store";
 import Formatter from 'utils/formatter';
 import Storage from 'stores/helpers/storage';
 
-const SECOND = 1000;
+const SECOND = 1000; // milliseconds per second
 
 class TimerStore extends BasicStore {
     @observable pause = false;
@@ -22,6 +22,7 @@ class TimerStore extends BasicStore {
 
     @action _initState = ({ timer = this.time }) => {
         this.time = timer;
+        this.format = Formatter.format(this.time);
     }
 
     @action _step = (time = this.time + 1) => {
