@@ -3,6 +3,7 @@ import {inject, observer} from 'mobx-react';
 import { StyleSheet, Button } from 'react-native';
 import { levelKeys } from 'components/config';
 import Layout from 'components/layout/Layout';
+import i18n from "../../../localization";
 
 @inject(({ nav, game }) => ({
     nav,
@@ -34,7 +35,7 @@ class MainScreen extends Component {
                 ) : null}
                 <Button
                     onPress={this._onCreateNewGame}
-                    title="Новая игра"
+                    title={i18n.t('newGame')}
                 />
             </Layout>
         )

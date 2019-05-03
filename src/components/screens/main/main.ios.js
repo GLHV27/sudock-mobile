@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {inject, observer} from 'mobx-react';
 import { ActionSheetIOS, View } from 'react-native';
-import localization from 'localization';
+import i18n from 'localization';
 import { levelKeys } from 'components/config';
 import Layout from 'components/layout/Layout';
 import Button from 'components/button/button';
@@ -9,11 +9,11 @@ import style from './style';
 
 const actionSheetOptions = {
     options: [
-        localization.actions.cancel,
-        localization.levels.easy,
-        localization.levels.average,
-        localization.levels.complex,
-        localization.levels.expert,
+        i18n.t('actions.cancel'),
+        i18n.t('levels.easy'),
+        i18n.t('levels.average'),
+        i18n.t('levels.complex'),
+        i18n.t('levels.expert'),
     ],
     cancelButtonIndex: 0,
 };
@@ -28,7 +28,7 @@ const actionSheetOptions = {
 @observer
 class MainScreen extends Component {
     static navigationOptions = {
-        title: 'Main'
+        headerBackTitle: i18n.t('back')
     }
 
     _onCreateNewGame = () => {
@@ -62,20 +62,20 @@ class MainScreen extends Component {
                     <View style={style.item}>
                         <Button
                             onPress={this._onContinueGame}
-                            title={`Продолжить игру\n (${time} - ${localization.levels[level]})`}
+                            title={`${i18n.t('continueGame')}\n (${time} - ${i18n.t(`levels.${level}`)})`}
                         />
                     </View>
                 ) : null}
                 <View style={style.item}>
                     <Button
                         onPress={this._onCreateNewGame}
-                        title="Новая игра"
+                        title={i18n.t('newGame')}
                     />
                 </View>
                 <View style={style.item}>
                     <Button
                         onPress={this._onSettings}
-                        title="Настройки"
+                        title={i18n.t('settings')}
                     />
                 </View>
             </Layout>

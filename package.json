@@ -11,13 +11,14 @@
   "dependencies": {
     "eslint": "^5.15.3",
     "expo": "^31.0.2",
+    "expo-localization": "^4.0.0",
+    "i18n-js": "^3.2.1",
     "lodash": "^4.17.11",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-elements": "^1.1.0",
-    "react-native-localization": "^2.1.0",
     "react-navigation": "^3.3.2"
   },
   "devDependencies": {

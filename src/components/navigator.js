@@ -8,19 +8,11 @@ const StackNavigator = createStackNavigator({
         screen: MainScreen,
     },
     game: {
-        screen: GameScreen,
+        screen: GameScreen
     },
-    // settings: {
-    //     screen: SettingsStackNavigator
-    // }
-})
-
-const SettingsStackNavigator = createStackNavigator({
-    main: {
+    settings: {
         screen: SettingsScreen
     }
-}, {
-    mode: 'modal'
-})
+});
 
 export default createAppContainer(StackNavigator)

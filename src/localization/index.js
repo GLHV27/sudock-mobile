@@ -1,38 +1,12 @@
-// import LocalizedStrings from 'react-native-localization';
+import getLocale from './locale';
+import i18n from 'i18n-js';
+import ru from './ru';
+import en from './en';
 
-// let strings = new LocalizedStrings({
-let strings = ({
-    ru: {
-        actions: {
-            cancel: 'Отмена'
-        },
-        levels: {
-            easy: 'Легкая',
-            average: 'Средняя',
-            complex: 'Сложная',
-            expert: 'Экспертная',
-        },
-        errors: 'Ошибки',
-        clear: 'Очистить',
-        back: 'Назад',
-    },
-    en: {
-        actions: {
-            cancel: 'Cancel'
-        },
-        levels: {
-            easy: 'Easy',
-            average: 'Average',
-            complex: 'Complex',
-            expert: 'Expert',
-        },
-        errors: 'Errors',
-        clear: 'Clear',
-        back: 'Back',
-    }
-// });
-})['ru'];
+i18n.translations = {
+    ru,
+    en
+};
+i18n.locale = getLocale();
 
-export const getLocale = () => 'ru';
-
-export default strings;
+export default i18n;

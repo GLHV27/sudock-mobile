@@ -2,7 +2,7 @@ import React from 'react';
 import {inject, observer} from 'mobx-react';
 import {View, Text, StyleSheet} from 'react-native';
 import Timer from 'components/timer/timer';
-import localization from 'localization/index';
+import i18n from 'localization';
 
 @inject(({ game }) => ({
     level: game.level,
@@ -16,10 +16,10 @@ export default class TopBar extends React.Component {
         return (
             <View style={style.container}>
                 <View style={style.item}>
-                    <Text>{localization.levels[level]}</Text>
+                    <Text>{i18n.t(`levels.${level}`)}</Text>
                 </View>
                 <View style={[style.item, {textAlign: 'center'}]}>
-                    <Text>{localization.errors}: {`${errors.count}/${errors.total}`}</Text>
+                    <Text>{i18n.t('errors')}: {`${errors.count}/${errors.total}`}</Text>
                 </View>
                 <View style={[style.item, {textAlign: 'right'}]}>
                     <Timer />

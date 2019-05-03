@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import CustomModal from 'components/modal/modal';
 import Button from 'components/button/button';
+import i18n from 'localization';
 
 @inject(({ nav, game }) => ({
     nav,
@@ -21,7 +22,7 @@ class ModalGamePassed extends Component {
 
         return (
             <CustomModal visible={isEnd} transparent={false}>
-                <Button title={'На главную'} onPress={this.onClickButton} />
+                <Button title={i18n.t('toMain')} onPress={this.onClickButton} />
             </CustomModal>
         )
     }

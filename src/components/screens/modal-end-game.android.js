@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, Button, StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import CustomModal from 'components/modal/modal';
+import i18n from 'localization';
 
 @inject(({ game }) => ({
     isEnd: game.isEnd,
@@ -25,15 +26,15 @@ class ModalEndGame extends Component {
 
         return (
             <CustomModal visible={isVisible}>
-                <Text>Игра окончена</Text>
-                <Text>Вы совершили 3 ошибки и проиграли эту игру</Text>
+                <Text>{i18n.t('gameOver')}</Text>
+                <Text>{i18n.t('modals.textError')}</Text>
                 <Button
                     onPress={this._onContinue}
-                    title="Второй шанс"
+                    title={i18n.t('secondChance')}
                 />
                 <Button
                     onPress={this._onNewGame}
-                    title="Новая игра"
+                    title={i18n.t('newGame')}
                 />
             </CustomModal>
         )
