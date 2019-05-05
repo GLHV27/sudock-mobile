@@ -68,7 +68,10 @@ class GameStore extends BasicStore {
             return;
         }
 
-        history.put({selected: this.selected});
+        if (this.selected.cellIndex && this.selected.collectionIndex) {
+            history.put({selected: this.selected});
+        }
+
         this.selected = {
             collectionIndex,
             cellIndex
@@ -136,10 +139,10 @@ class GameStore extends BasicStore {
     }
 
     @action onBack = () => {
-        const { canvas: cnvs, selected } = history.back();
+        const { canvas: prevCanvas, selected } = history.back();
 
-        if (cnvs) {
-            this.canvas = cnvs;
+        if (prevCanvas) {
+            this.canvas = prevCanvas;
         }
 
         if (selected) {
@@ -152,6 +155,11 @@ class GameStore extends BasicStore {
 
     @action onClearCell = () => {
         const { collectionIndex, cellIndex } = this.selected;
+
+        if (!collectionIndex || !cellIndex) {
+            return;
+        }
+
         const cell = this.canvas[collectionIndex][cellIndex];
 
         if (cell.visible || !cell.isError) {

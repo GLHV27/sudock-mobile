@@ -4,11 +4,13 @@ import { inject, observer } from 'mobx-react';
 import CustomModal from 'components/modal/modal';
 import i18n from 'localization';
 
-@inject(({ game }) => ({
+@inject(({ game, nav }) => ({
+    nav,
     isEnd: game.isEnd,
     errors: game.errors,
     onClose: game.onClose,
-    onContinue: game.onContinue
+    onContinue: game.onContinue,
+    onCreateGame: game.onCreate,
 }))
 @observer
 class ModalEndGame extends Component {
@@ -16,7 +18,7 @@ class ModalEndGame extends Component {
         this.props.onContinue();
     }
 
-    _onNewGame = () => {
+    _onCreateNewGame = () => {
         
     }
 
@@ -33,7 +35,7 @@ class ModalEndGame extends Component {
                     title={i18n.t('secondChance')}
                 />
                 <Button
-                    onPress={this._onNewGame}
+                    onPress={this._onCreateNewGame}
                     title={i18n.t('newGame')}
                 />
             </CustomModal>

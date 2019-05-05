@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import {inject, observer} from 'mobx-react';
-import { StyleSheet, Button } from 'react-native';
+import {StyleSheet, Button, View} from 'react-native';
 import { levelKeys } from 'components/config';
 import Layout from 'components/layout/Layout';
-import i18n from "../../../localization";
+import i18n from 'localization';
+import style from "./style";
 
-@inject(({ nav, game }) => ({
+@inject(({ nav, game, timer }) => ({
     nav,
     onCreateGame: game.onCreate,
-    time: timer.time,
-    level: game.level
+    time: timer.format,
+    level: game.level,
+    isCanContinue: game.isCanContinue
 }))
 @observer
 class MainScreen extends Component {
     static navigationOptions = {
-        title: 'Main'
+        headerBackTitle: i18n.t('back')
+    }
+
+    _onContinueGame = () => {
+        this.props.nav.goTo('game');
     }
 
     _onCreateNewGame = () => {
@@ -22,21 +28,35 @@ class MainScreen extends Component {
         this.props.nav.goTo('game');
     }
 
+    _onSettings = () => {
+        this.props.nav.goTo('settings');
+    }
+
     render() {
-        const { timer, level } = this.props;
+        const { time, level, isCanContinue } = this.props;
 
         return (
             <Layout>
-                {level ? (
-                    <Button
-                        onPress={this._onContinueGame}
-                        title="Продолжить игру"
-                    />
+                {isCanContinue ? (
+                    <View style={style.item}>
+                        <Button
+                            onPress={this._onContinueGame}
+                            title={`${i18n.t('continueGame')}\n (${time} - ${i18n.t(`levels.${level}`)})`}
+                        />
+                    </View>
                 ) : null}
-                <Button
-                    onPress={this._onCreateNewGame}
-                    title={i18n.t('newGame')}
-                />
+                <View style={style.item}>
+                    <Button
+                        onPress={this._onCreateNewGame}
+                        title={i18n.t('newGame')}
+                    />
+                </View>
+                <View style={style.item}>
+                    <Button
+                        onPress={this._onSettings}
+                        title={i18n.t('settings')}
+                    />
+                </View>
             </Layout>
         )
     }

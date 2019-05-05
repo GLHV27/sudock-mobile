@@ -8,6 +8,7 @@ import i18n from 'localization';
 @inject(({ nav, game }) => ({
     nav,
     isEnd: game.isEnd,
+    errors: game.errors,
     onClose: game.onClose
 }))
 @observer
@@ -18,10 +19,11 @@ class ModalGamePassed extends Component {
     }
 
     render() {
-        const { isEnd } = this.props;
+        const { isEnd, errors: { total: totalErrors, count: countErrors } } = this.props;
+        const isVisible = isEnd && totalErrors > countErrors;
 
         return (
-            <CustomModal visible={isEnd} transparent={false}>
+            <CustomModal visible={isVisible} transparent={false}>
                 <Button title={i18n.t('toMain')} onPress={this.onClickButton} />
             </CustomModal>
         )
