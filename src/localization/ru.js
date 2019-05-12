@@ -5,6 +5,8 @@ export default {
     secondChance: 'Второй шанс',
     gameOver: 'Игра окончена',
     toMain: 'На главную',
+    statistics: 'Статистика',
+    options: 'Параметры',
     actions: {
         cancel: 'Отмена'
     },
@@ -19,5 +21,10 @@ export default {
     back: 'Назад',
     modals: {
         textError: 'Вы совершили 3 ошибки и проиграли эту игру'
-    }
+    },
+    bestTime: 'Лучшее время',
+    averageTime: 'Среднее время',
+    totalGames: 'Игр сыграно',
+    wonGames: 'Лучшая серия побед',
+    resetStatistics: 'Сбросить статистику'
 };

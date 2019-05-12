@@ -2,7 +2,7 @@ import { inject, observer } from 'mobx-react';
 import { ActionSheetIOS } from 'react-native';
 import i18n from 'localization';
 import { levelKeys } from 'components/config';
-import CommonMainScreen, { inject as commonInject } from './main.common';
+import CommonMainScreen, { injectProps } from './main.common';
 
 const actionSheetOptions = {
     options: [
@@ -15,7 +15,7 @@ const actionSheetOptions = {
     cancelButtonIndex: 0,
 };
 
-@inject(commonInject)
+@inject(injectProps)
 @observer
 class MainScreen extends CommonMainScreen {
     _onCreateNewGame = () => {

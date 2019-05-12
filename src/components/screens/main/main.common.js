@@ -6,7 +6,7 @@ import Button from 'components/button/button';
 import ModalMainLoader from 'components/screens/modal-main-loader';
 import style from './style';
 
-export const inject = ({ nav, game, timer }) => ({
+export const injectProps = ({ nav, game, timer }) => ({
     nav,
     onCreateGame: game.onCreate,
     time: timer.format,
@@ -16,7 +16,10 @@ export const inject = ({ nav, game, timer }) => ({
 
 class MainScreen extends Component {
     static navigationOptions = {
-        headerBackTitle: i18n.t('back')
+        headerBackTitle: i18n.t('back'),
+        headerStyle: {
+            borderBottomColor: 'transparent',
+        }
     }
 
     _onContinueGame = () => {

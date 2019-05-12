@@ -136,6 +136,8 @@ class GameStore extends BasicStore {
         this.getStore('timer').stop();
         this.isEnd = true;
         this.isCanContinue = false;
+
+        this._addToStatistics();
     }
 
     @action onBack = () => {
@@ -178,6 +180,13 @@ class GameStore extends BasicStore {
             errors: this.errors,
             totalFilled: this.totalFilled,
             isCanContinue: this.isCanContinue
+        });
+    }
+
+    _addToStatistics() {
+        this.getStore('statistics').add(this.level, {
+            time: this.getStore('timer').time,
+            isWon: this.errors.total !== this.errors.count
         });
     }
 }

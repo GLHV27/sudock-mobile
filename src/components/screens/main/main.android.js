@@ -1,8 +1,8 @@
 import { inject, observer } from 'mobx-react';
 import { levelKeys } from 'components/config';
-import CommonMainScreen, { inject as commonInject } from './main.common';
+import CommonMainScreen, { injectProps } from './main.common';
 
-@inject(commonInject)
+@inject(injectProps)
 @observer
 class MainScreen extends CommonMainScreen {
     _onCreateNewGame = () => {

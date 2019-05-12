@@ -5,6 +5,8 @@ export default {
     secondChance: 'Second chance',
     gameOver: 'Game over',
     toMain: 'To main',
+    statistics: 'Statistics',
+    options: 'Options',
     actions: {
         cancel: 'Cancel'
     },
@@ -19,5 +21,10 @@ export default {
     back: 'Back',
     modals: {
         textError: 'You made 3 mistakes and lost this game'
-    }
+    },
+    bestTime: 'Best time',
+    averageTime: 'Average time',
+    totalGames: 'Games played',
+    wonGames: 'The best series of victories',
+    resetStatistics: 'Reset statistics'
 };

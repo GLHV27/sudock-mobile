@@ -3,7 +3,7 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import CustomModal from 'components/modal/modal';
 
-const DURATION = 2000;
+const DURATION = 500;
 
 @inject(({ game }) => ({
     loaded: game.loaded
