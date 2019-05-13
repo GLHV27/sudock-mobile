@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
 import { inject, observer } from 'mobx-react';
 import CustomModal from 'components/modal/modal';
+import Button from 'components/button/button';
+import i18n from 'localization';
 
-@inject(({ game }) => ({
-    isEnd: game.isEnd
+@inject(({ nav, game }) => ({
+    nav,
+    isEnd: game.isEnd,
+    errors: game.errors,
+    onClose: game.onClose
 }))
 @observer
 class ModalGamePassed extends Component {
+    onClickButton = () => {
+        this.props.onClose();
+        this.props.nav.goTo('main');
+    }
+
     render() {
-        const { isEnd } = this.props;
+        const { isEnd, errors: { total: totalErrors, count: countErrors } } = this.props;
+        const isVisible = isEnd && totalErrors > countErrors;
 
         return (
-            <CustomModal visible={isEnd} transparent={false}>
-                <Button title={'На главную'} />
+            <CustomModal visible={isVisible} transparent={false}>
+                <Button title={i18n.t('toMain')} onPress={this.onClickButton} />
             </CustomModal>
         )
     }

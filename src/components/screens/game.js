@@ -9,10 +9,6 @@ import ModalEndGame from './modal-end-game';
 import ModalGamePassed from 'components/screens/modal-game-passed';
 
 class GameScreen extends Component {
-    static navigationOptions = {
-        title: 'Game'
-    }
-
     render() {
         return (
             <Layout>

@@ -68,7 +68,10 @@ class GameStore extends BasicStore {
             return;
         }
 
-        history.put({selected: this.selected});
+        if (this.selected.cellIndex && this.selected.collectionIndex) {
+            history.put({selected: this.selected});
+        }
+
         this.selected = {
             collectionIndex,
             cellIndex
@@ -133,13 +136,15 @@ class GameStore extends BasicStore {
         this.getStore('timer').stop();
         this.isEnd = true;
         this.isCanContinue = false;
+
+        this._addToStatistics();
     }
 
     @action onBack = () => {
-        const { canvas: cnvs, selected } = history.back();
+        const { canvas: prevCanvas, selected } = history.back();
 
-        if (cnvs) {
-            this.canvas = cnvs;
+        if (prevCanvas) {
+            this.canvas = prevCanvas;
         }
 
         if (selected) {
@@ -152,6 +157,11 @@ class GameStore extends BasicStore {
 
     @action onClearCell = () => {
         const { collectionIndex, cellIndex } = this.selected;
+
+        if (!collectionIndex || !cellIndex) {
+            return;
+        }
+
         const cell = this.canvas[collectionIndex][cellIndex];
 
         if (cell.visible || !cell.isError) {
@@ -170,6 +180,13 @@ class GameStore extends BasicStore {
             errors: this.errors,
             totalFilled: this.totalFilled,
             isCanContinue: this.isCanContinue
+        });
+    }
+
+    _addToStatistics() {
+        this.getStore('statistics').add(this.level, {
+            time: this.getStore('timer').time,
+            isWon: this.errors.total !== this.errors.count
         });
     }
 }

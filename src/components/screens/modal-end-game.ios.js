@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Text, Button, StyleSheet, ActionSheetIOS } from 'react-native';
 import { inject, observer } from 'mobx-react';
-import localization from 'localization';
+import i18n from 'localization';
 import { levelKeys } from 'components/config';
 import CustomModal from 'components/modal/modal';
 
 const actionSheetOptions = {
     options: [
-        localization.actions.cancel,
-        localization.levels.easy,
-        localization.levels.average,
-        localization.levels.complex,
-        localization.levels.expert,
+        i18n.t('actions.cancel'),
+        i18n.t('levels.easy'),
+        i18n.t('levels.average'),
+        i18n.t('levels.complex'),
+        i18n.t('levels.expert'),
     ],
     cancelButtonIndex: 0
 };
@@ -50,15 +50,15 @@ class ModalEndGame extends Component {
 
         return (
             <CustomModal visible={isVisible}>
-                <Text>Игра окончена</Text>
-                <Text>Вы совершили 3 ошибки и проиграли эту игру</Text>
+                <Text>{i18n.t('gameOver')}</Text>
+                <Text>{i18n.t('modals.textError')}</Text>
                 <Button
                     onPress={this._onContinue}
-                    title="Второй шанс"
+                    title={i18n.t('secondChance')}
                 />
                 <Button
                     onPress={this._onCreateNewGame}
-                    title="Новая игра"
+                    title={i18n.t('newGame')}
                 />
             </CustomModal>
         )

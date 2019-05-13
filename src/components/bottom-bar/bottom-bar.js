@@ -2,7 +2,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import style from './style';
-import localization from 'localization/index';
+import i18n from 'localization';
 
 @inject(({ game }) => ({
     onBack: game.onBack,
@@ -32,14 +32,14 @@ export default class BottomBar extends React.Component {
                         activeOpacity={isHaveHistory ? 0.2 : 0.5}
                         style={[!isHaveHistory ? style.disable : null]}
                     >
-                        <Text>{localization.back}</Text>
+                        <Text>{i18n.t('back')}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={[style.item, style.itemCenter]}>
                     <TouchableOpacity
                         onPress={this._onClearCell}
                     >
-                        <Text>{localization.clear}</Text>
+                        <Text>{i18n.t('clear')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
