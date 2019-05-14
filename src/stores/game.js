@@ -70,6 +70,7 @@ class GameStore extends BasicStore {
 
         if (this.selected.cellIndex && this.selected.collectionIndex) {
             history.put({selected: this.selected});
+            this.isHaveHistory = true;
         }
 
         this.selected = {
@@ -79,7 +80,6 @@ class GameStore extends BasicStore {
 
         this._setStorage();
         canvas.highlight(this.canvas, collectionIndex, cellIndex);
-        this.isHaveHistory = true;
     }
 
     @action onWrite = (number) => {

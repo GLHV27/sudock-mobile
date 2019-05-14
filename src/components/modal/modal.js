@@ -8,6 +8,7 @@ export default class CustomModal extends React.Component {
             visible,
             animationType = 'fade',
             transparent = true,
+            onRequestClose = Function.prototype,
             children
         } = this.props;
         const style = transparent ? def : full;
@@ -17,6 +18,7 @@ export default class CustomModal extends React.Component {
                 visible={visible}
                 transparent={transparent}
                 animationType={animationType}
+                onRequestClose={onRequestClose}
             >
                 <View style={style.background}>
                     <View style={style.container}>

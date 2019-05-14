@@ -4,14 +4,15 @@ import {View, Text, StyleSheet} from 'react-native';
 import Timer from 'components/timer/timer';
 import i18n from 'localization';
 
-@inject(({ game }) => ({
+@inject(({ game, options }) => ({
     level: game.level,
     errors: game.errors,
+    isErrorLimitNeeded: options.isErrorLimitNeeded
 }))
 @observer
 export default class TopBar extends React.Component {
     render() {
-        const { level, errors } = this.props;
+        const { level, errors, isErrorLimitNeeded } = this.props;
 
         return (
             <View style={style.container}>
@@ -22,7 +23,10 @@ export default class TopBar extends React.Component {
                     <Text>{i18n.t('errors')}: {`${errors.count}/${errors.total}`}</Text>
                 </View>
                 <View style={[style.item, {textAlign: 'right'}]}>
-                    <Timer />
+                    {isErrorLimitNeeded
+                        ? <Timer />
+                        : null
+                    }
                 </View>
             </View>
         );

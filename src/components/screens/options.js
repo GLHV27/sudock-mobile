@@ -6,36 +6,36 @@ import i18n from 'localization';
 
 const list = [
     {
-        title: 'Таймер',
+        title: i18n.t('timer'),
         keyData: 'isNeedTimer',
         topDivider: true
     },
     {
-        title: 'Лимит ошибок',
-        description: 'Практика без ошибок&nbsp;&mdash; это единственная конечная цель! Улучшите свои навыки и&nbsp;точность с&nbsp;помощью ограничения ошибок до&nbsp;3&nbsp;за&nbsp;игру.',
+        title: i18n.t('errorLimit'),
+        description: i18n.t('descriptionOptions.errorLimit'),
         keyData: 'isErrorLimitNeeded'
     },
     {
-        title: 'Скрывать использованные цифры',
-        description: 'Скрывать цифры, уже размещенные в&nbsp;9&nbsp;различных ячейках.',
+        title: i18n.t('hideUsedNumbers'),
+        description: i18n.t('descriptionOptions.hideUsedNumbers'),
         keyData: 'isNeedHideUseNumbers',
         topDivider: true
     },
     {
-        title: 'Выделять повторы',
-        description: 'Выделять повторяющиеся цифры в&nbsp;строке, столбце и&nbsp;блоке.',
+        title: i18n.t('highlightReplays'),
+        description: i18n.t('descriptionOptions.highlightReplays'),
         keyData: 'isNeedToHighlightRepeats',
         topDivider: true
     },
     {
-        title: 'Выделять области',
-        description: 'Выделять блок, строку и&nbsp;столбец выбранной ячейки.',
+        title: i18n.t('selectAreas'),
+        description: i18n.t('descriptionOptions.selectAreas'),
         keyData: 'isNeedToSelectAreas',
         topDivider: true
     },
     {
-        title: 'Выделять одинаковые цифры',
-        description: 'При выборе ячейки с&nbsp;цифрой, выделять одинаковые значения на&nbsp;игровом поле.',
+        title: i18n.t('selectSameNumbers'),
+        description: i18n.t('descriptionOptions.selectSameNumbers'),
         keyData: 'isNeedToAllocateSameNumbers',
         topDivider: true
     }
@@ -77,7 +77,7 @@ class OptionsScreen extends Component {
                 bottomDivider={true}
             />
             {description
-                ? <Text style={styles.description}><>{description}</></Text>
+                ? <Text style={styles.description}>{description}</Text>
                 : null
             }
         </View>
