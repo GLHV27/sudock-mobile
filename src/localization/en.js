@@ -5,6 +5,7 @@ export default {
     secondChance: 'Second chance',
     gameOver: 'Game over',
     toMain: 'To main',
+    main: 'Main',
     statistics: 'Statistics',
     options: 'Options',
     actions: {

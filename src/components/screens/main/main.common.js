@@ -15,19 +15,8 @@ export const injectProps = ({ nav, game, timer }) => ({
 });
 
 class MainScreen extends Component {
-    static navigationOptions = {
-        headerBackTitle: i18n.t('back'),
-        headerStyle: {
-            borderBottomColor: 'transparent',
-        }
-    }
-
     _onContinueGame = () => {
         this.props.nav.goTo('game');
-    }
-
-    _onSettings = () => {
-        this.props.nav.goTo('settings');
     }
 
     render() {
@@ -35,25 +24,21 @@ class MainScreen extends Component {
 
         return (
             <Layout>
-                {isCanContinue ? (
+                <View style={style.container}>
+                    {isCanContinue ? (
+                        <View style={style.item}>
+                            <Button
+                                onPress={this._onContinueGame}
+                                title={`${i18n.t('continueGame')}\n (${time} - ${i18n.t(`levels.${level}`)})`}
+                            />
+                        </View>
+                    ) : null}
                     <View style={style.item}>
                         <Button
-                            onPress={this._onContinueGame}
-                            title={`${i18n.t('continueGame')}\n (${time} - ${i18n.t(`levels.${level}`)})`}
+                            onPress={this._onCreateNewGame}
+                            title={i18n.t('newGame')}
                         />
                     </View>
-                ) : null}
-                <View style={style.item}>
-                    <Button
-                        onPress={this._onCreateNewGame}
-                        title={i18n.t('newGame')}
-                    />
-                </View>
-                <View style={style.item}>
-                    <Button
-                        onPress={this._onSettings}
-                        title={i18n.t('settings')}
-                    />
                 </View>
                 <ModalMainLoader />
             </Layout>

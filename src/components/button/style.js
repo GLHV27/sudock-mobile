@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-export const solid = StyleSheet.create({
-    
-});
-
-export const full = StyleSheet.create({
-
+export default StyleSheet.create({
+    solid: {
+        backgroundColor: '#4990e2',
+        borderRadius: 20
+    }
 });

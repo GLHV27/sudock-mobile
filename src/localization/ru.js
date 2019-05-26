@@ -5,6 +5,7 @@ export default {
     secondChance: 'Второй шанс',
     gameOver: 'Игра окончена',
     toMain: 'На главную',
+    main: 'Главная',
     statistics: 'Статистика',
     options: 'Параметры',
     actions: {
