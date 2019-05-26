@@ -68,6 +68,8 @@ class StatisticsScreen extends Component {
         return (
             <View style={styles.container}>
                 <ButtonGroup
+                    textStyle={styles.textButton}
+                    buttonStyle={styles.button}
                     buttons={this.buttons}
                     selectedIndex={selectedIndex}
                     onPress={this._updateIndex}
@@ -103,6 +105,13 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingRight: 10,
         textAlign: 'right',
+    },
+    button: {
+        paddingTop: 6,
+        paddingBottom: 6,
+    },
+    textButton: {
+        fontSize: 13
     }
 });
 

@@ -1,5 +1,5 @@
 export default {
-    continueGame: 'Continue the game',
+    continueGame: 'Continue',
     newGame: 'New game',
     settings: 'Settings',
     secondChance: 'Second chance',

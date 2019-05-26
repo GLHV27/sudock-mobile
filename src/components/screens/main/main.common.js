@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import i18n from 'localization';
 import Layout from 'components/layout/Layout';
 import Button from 'components/button/button';
-import ModalMainLoader from 'components/screens/modal-main-loader';
+import Logo from 'components/logo/logo';
 import style from './style';
 
 export const injectProps = ({ nav, game, timer }) => ({
@@ -25,11 +25,13 @@ class MainScreen extends Component {
         return (
             <Layout>
                 <View style={style.container}>
+                    <Logo />
                     {isCanContinue ? (
                         <View style={style.item}>
                             <Button
                                 onPress={this._onContinueGame}
-                                title={`${i18n.t('continueGame')}\n (${time} - ${i18n.t(`levels.${level}`)})`}
+                                title={`${i18n.t('continueGame')}\n ${time} - ${i18n.t(`levels.${level}`)}`}
+                                size={'large'}
                             />
                         </View>
                     ) : null}
@@ -37,10 +39,10 @@ class MainScreen extends Component {
                         <Button
                             onPress={this._onCreateNewGame}
                             title={i18n.t('newGame')}
+                            size={'large'}
                         />
                     </View>
                 </View>
-                <ModalMainLoader />
             </Layout>
         )
     }
