@@ -6,7 +6,7 @@ export default class Logo extends React.Component {
     render() {
         return (
             <View style={style.container}>
-                <Text style={style.text}>Sudocu</Text>
+                <Text style={style.text}>Sudoku</Text>
             </View>
         );
     }
