@@ -6,12 +6,13 @@ import Button from 'components/button/button';
 import ModalMainLoader from 'components/screens/modal-main-loader';
 import style from './style';
 
-export const injectProps = ({ nav, game, timer }) => ({
+export const injectProps = ({ nav, game, timer, options }) => ({
     nav,
     onCreateGame: game.onCreate,
     time: timer.format,
     level: game.level,
-    isCanContinue: game.isCanContinue
+    isCanContinue: game.isCanContinue,
+    isNeedTimer: options.isNeedTimer,
 });
 
 class MainScreen extends Component {
@@ -30,16 +31,25 @@ class MainScreen extends Component {
         this.props.nav.goTo('settings');
     }
 
+    _getTimer() {
+        if (!this.props.isNeedTimer) {
+            return '';
+        }
+
+        return `${this.props.time} - `;
+    }
+
     render() {
-        const { time, level, isCanContinue } = this.props;
+        const { level, isCanContinue } = this.props;
 
         return (
             <Layout>
+                <ModalMainLoader />
                 {isCanContinue ? (
                     <View style={style.item}>
                         <Button
                             onPress={this._onContinueGame}
-                            title={`${i18n.t('continueGame')}\n (${time} - ${i18n.t(`levels.${level}`)})`}
+                            title={`${i18n.t('continueGame')}\n (${this._getTimer()}${i18n.t(`levels.${level}`)})`}
                         />
                     </View>
                 ) : null}
@@ -55,7 +65,6 @@ class MainScreen extends Component {
                         title={i18n.t('settings')}
                     />
                 </View>
-                <ModalMainLoader />
             </Layout>
         )
     }

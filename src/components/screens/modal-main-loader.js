@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import CustomModal from 'components/modal/modal';
 
-const DURATION = 500;
+const DURATION = 5000;
 
 @inject(({ game }) => ({
     loaded: game.loaded
@@ -40,7 +40,9 @@ class ModalMainLoader extends Component {
                 transparent={false}
                 animationType={this.state.animationType}
             >
-                <ActivityIndicator size="large" color="#00ff00" />
+                <View style={styles.container}>
+                    <ActivityIndicator size="large" color="#00ff00" />
+                </View>
             </CustomModal>
         )
     }
@@ -48,6 +50,9 @@ class ModalMainLoader extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#ffffff'
+    }
 });
 
 export default ModalMainLoader;

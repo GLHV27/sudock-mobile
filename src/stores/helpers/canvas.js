@@ -108,6 +108,20 @@ class Canvas {
 		return collectionIndex % this.number * this.number + cellIndex % this.number;
 	}
 
+	getNumberOfDigits(canvas, number) {
+		let count = 0;
+
+		canvas.forEach(collection => {
+			collection.forEach(({ visible,  value}) => {
+				if (visible && value === number) {
+					count += 1;
+				}
+			});
+		});
+
+		return count;
+	}
+
     highlight(canvas, collectionIndex, cellIndex) {
         const selectedCell = canvas[collectionIndex][cellIndex];
         const lineIndexSelectedCell = this.getLineIndex(collectionIndex, cellIndex);

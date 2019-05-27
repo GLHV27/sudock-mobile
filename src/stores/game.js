@@ -18,7 +18,9 @@ class GameStore extends BasicStore {
     @observable selected = { collectionIndex: null, cellIndex: null };
     @observable level = '';
     @observable errors = {};
-    @observable totalFilled = 0;
+    @observable usedNumbers = {};
+    filledFields = 0;
+    totalFields = Math.pow(NUMBER, 4);
 
     constructor(...args) {
         super(...args);
@@ -34,15 +36,17 @@ class GameStore extends BasicStore {
         canvas = this.canvas,
         level = this.level,
         errors = this.errors,
-        totalFilled = this.totalFilled,
-        isCanContinue = this.isCanContinue
+        filledFields = this.filledFields,
+        isCanContinue = this.isCanContinue,
+        usedNumbers = this.usedNumbers
     }) => {
         this.selected = selected;
         this.canvas = canvas;
         this.level = level;
         this.errors = errors;
-        this.totalFilled = totalFilled;
+        this.filledFields = filledFields;
         this.isCanContinue = isCanContinue;
+        this.usedNumbers = usedNumbers;
         this.loaded = true;
     }
 
@@ -51,7 +55,7 @@ class GameStore extends BasicStore {
         this.canvas = canvas.create(level);
         this.isCanContinue = true;
         this.isEnd = false;
-        this.totalFilled = levelsParams[level].count;
+        this.filledFields = levelsParams[level].count;
         this.selected = { collectionIndex: null, cellIndex: null };
         this.errors = { total: 3, count: 0 };
         this.getStore('timer').reset();
@@ -95,24 +99,28 @@ class GameStore extends BasicStore {
             return;
         }
 
+        const { isErrorLimitNeeded, isNeedHideUseNumbers } = this.getStore('options');
+
         history.put({ canvas: this.canvas });
         this.isHaveHistory = true;
 
         if (cell.value !== number) {
             cell.isError = true;
             cell.number = number;
-            this.errors.count += 1;
+            isErrorLimitNeeded && (this.errors.count += 1);
         } else {
             cell.number = null;
             cell.isError = false;
             cell.visible = true;
             cell.isGuessed = true;
-            this.totalFilled += 1;
+            this.filledFields += 1;
+
+            isNeedHideUseNumbers && this.checkNumberForUse(number);
         }
 
         if (
-            this.errors.total <= this.errors.count ||
-            Math.pow(NUMBER, 4) <= this.totalFilled
+            (isErrorLimitNeeded && this.errors.total <= this.errors.count) ||
+            this.totalFields <= this.filledFields
         ) {
             this.onEnd();
             return;
@@ -172,14 +180,23 @@ class GameStore extends BasicStore {
         cell.number = null;
     }
 
+    @action checkNumberForUse(number) {
+        const count = canvas.getNumberOfDigits(this.canvas, number);
+
+        if (count === this.numbers.length) {
+            this.usedNumbers[number] = true;
+        }
+    }
+
     _setStorage() {
         this.storage.setState({
             canvas: this.canvas,
             selected: this.selected,
             level: this.level,
             errors: this.errors,
-            totalFilled: this.totalFilled,
-            isCanContinue: this.isCanContinue
+            filledFields: this.filledFields,
+            isCanContinue: this.isCanContinue,
+            usedNumbers: this.usedNumbers
         });
     }
 

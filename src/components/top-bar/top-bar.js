@@ -7,12 +7,13 @@ import i18n from 'localization';
 @inject(({ game, options }) => ({
     level: game.level,
     errors: game.errors,
+    isNeedTimer: options.isNeedTimer,
     isErrorLimitNeeded: options.isErrorLimitNeeded
 }))
 @observer
 export default class TopBar extends React.Component {
     render() {
-        const { level, errors, isErrorLimitNeeded } = this.props;
+        const { level, errors, isNeedTimer, isErrorLimitNeeded } = this.props;
 
         return (
             <View style={style.container}>
@@ -20,10 +21,13 @@ export default class TopBar extends React.Component {
                     <Text>{i18n.t(`levels.${level}`)}</Text>
                 </View>
                 <View style={[style.item, {textAlign: 'center'}]}>
-                    <Text>{i18n.t('errors')}: {`${errors.count}/${errors.total}`}</Text>
+                    {isErrorLimitNeeded
+                        ? <Text>{i18n.t('errors')}: {`${errors.count}/${errors.total}`}</Text>
+                        : null
+                    }
                 </View>
                 <View style={[style.item, {textAlign: 'right'}]}>
-                    {isErrorLimitNeeded
+                    {isNeedTimer
                         ? <Timer />
                         : null
                     }

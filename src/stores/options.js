@@ -43,7 +43,12 @@ class OptionsStore extends BasicStore {
 
     _setStorage() {
         this.storage.setState({
-            isNeedTimer: this.isNeedTimer
+            isNeedTimer: this.isNeedTimer,
+            isErrorLimitNeeded: this.isErrorLimitNeeded,
+            isNeedHideUseNumbers: this.isNeedHideUseNumbers,
+            isNeedToHighlightRepeats: this.isNeedToHighlightRepeats,
+            isNeedToSelectAreas: this.isNeedToSelectAreas,
+            isNeedToAllocateSameNumbers: this.isNeedToAllocateSameNumbers
         });
     }
 }

@@ -37,7 +37,7 @@ class TimerStore extends BasicStore {
     }
 
     @action start = () => {
-        if (this.id) {
+        if (this.id || !this.getStore('options').isNeedTimer) {
             return;
         }
 
