@@ -1,10 +1,11 @@
 export default {
-    continueGame: 'Continue the game',
+    continueGame: 'Continue',
     newGame: 'New game',
     settings: 'Settings',
     secondChance: 'Second chance',
     gameOver: 'Game over',
     toMain: 'To main',
+    main: 'Main',
     statistics: 'Statistics',
     options: 'Options',
     actions: {

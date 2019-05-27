@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import i18n from 'localization';
 import Layout from 'components/layout/Layout';
 import Button from 'components/button/button';
-import ModalMainLoader from 'components/screens/modal-main-loader';
+import Logo from 'components/logo/logo';
 import style from './style';
 
 export const injectProps = ({ nav, game, timer, options }) => ({
@@ -16,19 +16,8 @@ export const injectProps = ({ nav, game, timer, options }) => ({
 });
 
 class MainScreen extends Component {
-    static navigationOptions = {
-        headerBackTitle: i18n.t('back'),
-        headerStyle: {
-            borderBottomColor: 'transparent',
-        }
-    }
-
     _onContinueGame = () => {
         this.props.nav.goTo('game');
-    }
-
-    _onSettings = () => {
-        this.props.nav.goTo('settings');
     }
 
     _getTimer() {
@@ -44,26 +33,24 @@ class MainScreen extends Component {
 
         return (
             <Layout>
-                <ModalMainLoader />
-                {isCanContinue ? (
+                <View style={style.container}>
+                    <Logo />
+                    {isCanContinue ? (
+                        <View style={style.item}>
+                            <Button
+                                onPress={this._onContinueGame}
+                                title={`${i18n.t('continueGame')}\n (${this._getTimer()}${i18n.t(`levels.${level}`)})`}
+                                size={'large'}
+                            />
+                        </View>
+                    ) : null}
                     <View style={style.item}>
                         <Button
-                            onPress={this._onContinueGame}
-                            title={`${i18n.t('continueGame')}\n (${this._getTimer()}${i18n.t(`levels.${level}`)})`}
+                            onPress={this._onCreateNewGame}
+                            title={i18n.t('newGame')}
+                            size={'large'}
                         />
                     </View>
-                ) : null}
-                <View style={style.item}>
-                    <Button
-                        onPress={this._onCreateNewGame}
-                        title={i18n.t('newGame')}
-                    />
-                </View>
-                <View style={style.item}>
-                    <Button
-                        onPress={this._onSettings}
-                        title={i18n.t('settings')}
-                    />
                 </View>
             </Layout>
         )

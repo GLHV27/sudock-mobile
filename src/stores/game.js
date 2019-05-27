@@ -10,7 +10,6 @@ const history = new History();
 
 class GameStore extends BasicStore {
     @observable isEnd = false;
-    @observable loaded = false;
     @observable isCanContinue = false;
     @observable isHaveHistory = false;
     @observable canvas = [];
@@ -47,7 +46,8 @@ class GameStore extends BasicStore {
         this.filledFields = filledFields;
         this.isCanContinue = isCanContinue;
         this.usedNumbers = usedNumbers;
-        this.loaded = true;
+
+        this.getStore('mainLoad').setGameLoaded();
     }
 
     @action onCreate = (level) => {

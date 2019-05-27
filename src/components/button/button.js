@@ -1,22 +1,19 @@
 import React from 'react';
 import { Button as CustomButton } from 'react-native-elements';
-import { solid } from './style';
-
-const style = {
-    solid,
-};
+import { sizes, styles } from './style';
 
 export default function Button({
     type = 'solid',
     title = '',
+    size = 'normal',
     onPress = Function.prototype
 }) {
-    const styles = style[type];
-
     return (
         <CustomButton
             title={title}
             onPress={onPress}
+            buttonStyle={[styles[type].button, sizes[size].button]}
+            titleStyle={[styles[type].title, sizes[size].title]}
         />
     )
 }

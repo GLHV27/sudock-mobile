@@ -1,10 +1,11 @@
 export default {
-    continueGame: 'Продолжить игру',
+    continueGame: 'Продолжить',
     newGame: 'Новая игра',
     settings: 'Настройки',
     secondChance: 'Второй шанс',
     gameOver: 'Игра окончена',
     toMain: 'На главную',
+    main: 'Главная',
     statistics: 'Статистика',
     options: 'Параметры',
     actions: {
