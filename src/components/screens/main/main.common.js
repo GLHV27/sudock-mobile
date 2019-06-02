@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import i18n from 'localization';
 import Layout from 'components/layout/Layout';
 import Button from 'components/button/button';
@@ -13,7 +13,7 @@ export const injectProps = ({ nav, game, timer, options }) => ({
     time: timer.format,
     level: game.level,
     isCanContinue: game.isCanContinue,
-    isNeedTimer: options.isNeedTimer,
+    isNeedTimer: options.isNeedTimer
 });
 
 class MainScreen extends Component {
@@ -34,6 +34,10 @@ class MainScreen extends Component {
 
         return (
             <Layout>
+                <ImageBackground
+                    source={require('assets/bgr/main-bgr.bmp')}
+                    style={style.bgr}
+                />
                 <View style={style.container}>
                     <Logo />
                     {isCanContinue ? (
@@ -41,7 +45,7 @@ class MainScreen extends Component {
                             <CustomButton
                                 onPress={this._onContinueGame}
                                 title={i18n.t('continueGame')}
-                                iconSubtitle={require(`assets/icons/clock.svg`)}
+                                iconSubtitle={require('assets/icons/clock.svg')}
                                 subtitle={`${this._getTimer()}${i18n.t(`levels.${level}`)}`}
                             />
                         </View>
