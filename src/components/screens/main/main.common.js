@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import i18n from 'localization';
 import Layout from 'components/layout/Layout';
 import Button from 'components/button/button';
+import CustomButton from 'components/button/custom-Button';
 import Logo from 'components/logo/logo';
 import style from './style';
 
@@ -37,10 +38,11 @@ class MainScreen extends Component {
                     <Logo />
                     {isCanContinue ? (
                         <View style={style.item}>
-                            <Button
+                            <CustomButton
                                 onPress={this._onContinueGame}
-                                title={`${i18n.t('continueGame')}\n (${this._getTimer()}${i18n.t(`levels.${level}`)})`}
-                                size={'large'}
+                                title={i18n.t('continueGame')}
+                                iconSubtitle={require(`assets/icons/clock.svg`)}
+                                subtitle={`${this._getTimer()}${i18n.t(`levels.${level}`)}`}
                             />
                         </View>
                     ) : null}
