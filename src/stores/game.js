@@ -58,6 +58,7 @@ class GameStore extends BasicStore {
         this.filledFields = levelsParams[level].count;
         this.selected = { collectionIndex: null, cellIndex: null };
         this.errors = { total: 3, count: 0 };
+        this.usedNumbers = {};
         this.getStore('timer').reset();
 
         history.clear();
@@ -185,6 +186,22 @@ class GameStore extends BasicStore {
 
         if (count === this.numbers.length) {
             this.usedNumbers[number] = true;
+        }
+    }
+
+    @action checkNumbersForUse() {
+        const { isNeedHideUseNumbers } = this.getStore('options');
+
+        if (isNeedHideUseNumbers) {
+            this.numbers.forEach(number => this.checkNumberForUse(number))
+        }
+    }
+
+    @action updateOptions = (key) => {
+        switch (key) {
+            case 'isNeedHideUseNumbers':
+                this.checkNumbersForUse();
+                break;
         }
     }
 

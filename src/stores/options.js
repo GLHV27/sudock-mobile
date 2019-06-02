@@ -38,6 +38,10 @@ class OptionsStore extends BasicStore {
     @action changeData = (key, value) => {
         this[key] = value;
 
+        if (value) {
+            this.getStore('game').updateOptions(key);
+        }
+
         this._setStorage();
     }
 
