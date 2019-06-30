@@ -7,6 +7,11 @@ import CustomButton from 'components/button/custom-Button';
 import Logo from 'components/logo/logo';
 import style from './style';
 
+const images = {
+    bgr: require('assets/bgr/main-bgr.bmp'),
+    clock: require('assets/icons/clock.svg')
+};
+
 export const injectProps = ({ nav, game, timer, options }) => ({
     nav,
     onCreateGame: game.onCreate,
@@ -35,7 +40,7 @@ class MainScreen extends Component {
         return (
             <Layout>
                 <ImageBackground
-                    source={require('assets/bgr/main-bgr.bmp')}
+                    source={images.bgr}
                     style={style.bgr}
                 />
                 <View style={style.container}>
@@ -45,7 +50,7 @@ class MainScreen extends Component {
                             <CustomButton
                                 onPress={this._onContinueGame}
                                 title={i18n.t('continueGame')}
-                                iconSubtitle={require('assets/icons/clock.svg')}
+                                iconSubtitle={images.clock}
                                 subtitle={`${this._getTimer()}${i18n.t(`levels.${level}`)}`}
                             />
                         </View>
